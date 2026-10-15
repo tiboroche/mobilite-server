@@ -20,7 +20,7 @@ python3 test_server.py T.test_quick_link        # un seul test (unittest)
 docker compose up -d --build
 ```
 
-`MOB_TOKEN` (≥ 16 caractères) est obligatoire, sinon `main()` s'arrête. Exemples de reverse proxy HTTPS : `Caddyfile.example`, `apache2.conf.example`. Voir `.env.example` pour les autres variables (`NTFY_*`, `PUBLIC_URL`, `MOB_TZ`, `MOB_TRUST_PROXY`, `MOB_DB`).
+`MOB_TOKEN` (≥ 16 caractères) est obligatoire, sinon `main()` s'arrête. Exemples de reverse proxy HTTPS : `Caddyfile.example`, `apache2.conf.example`, `nginx.conf.example`. Voir `.env.example` pour les autres variables (`NTFY_*`, `PUBLIC_URL`, `MOB_TZ`, `MOB_TRUST_PROXY`, `MOB_DB`).
 
 ## Architecture
 

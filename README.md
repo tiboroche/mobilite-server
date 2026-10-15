@@ -46,7 +46,7 @@ sudo systemctl enable --now mobilite
 
 ### 3. HTTPS
 Le service écoute en local (`127.0.0.1:8080`). Place un reverse proxy devant, avec HTTPS :
-voir `Caddyfile.example` (certificat automatique) ou `apache2.conf.example` (Apache + certbot). C'est indispensable : ton jeton circule dans
+voir `Caddyfile.example` (certificat automatique) `apache2.conf.example` (Apache + certbot) ou `nginx.conf.example` (nginx + certbot). C'est indispensable : ton jeton circule dans
 les requêtes, et l'installation de la page sur l'écran d'accueil exige HTTPS.
 
 ### 4. Sur le téléphone
