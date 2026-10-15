@@ -1,0 +1,30 @@
+# /etc/apache2/sites-available/mobilite.conf
+# Modules : sudo a2enmod proxy proxy_http headers ssl rewrite
+# Certificat : sudo certbot certonly --apache -d mobilite.example.org
+# Activation : sudo a2ensite mobilite && sudo apachectl configtest && sudo systemctl reload apache2
+
+<VirtualHost *:80>
+    ServerName mobilite.example.org
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerName mobilite.example.org
+
+    SSLEngine on
+    SSLCertificateFile    /etc/letsencrypt/live/mobilite.example.org/fullchain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/mobilite.example.org/privkey.pem
+
+    ProxyPreserveHost On
+    ProxyRequests Off
+    # Avec MOB_TRUST_PROXY=1, le serveur lit la 1re IP de X-Forwarded-For pour limiter les
+    # tentatives. On jette celle envoyée par le client : mod_proxy la recrée avec l'IP réelle.
+    RequestHeader unset X-Forwarded-For
+    RequestHeader set X-Forwarded-Proto "https"
+    ProxyPass        / http://127.0.0.1:8080/
+    ProxyPassReverse / http://127.0.0.1:8080/
+
+    Header always set Strict-Transport-Security "max-age=31536000"
+</VirtualHost>
