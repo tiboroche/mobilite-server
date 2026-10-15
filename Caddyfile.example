@@ -1,0 +1,4 @@
+# Caddy obtient et renouvelle le certificat HTTPS tout seul.
+mobilite.example.org {
+    reverse_proxy 127.0.0.1:8080
+}

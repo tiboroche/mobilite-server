@@ -1,0 +1,13 @@
+services:
+  mobilite:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MOB_HOST: 0.0.0.0
+    ports:
+      - "127.0.0.1:8080:8080"   # exposé uniquement en local : le reverse proxy fait le HTTPS
+    volumes:
+      - mobilite-data:/data
+volumes:
+  mobilite-data:

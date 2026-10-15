@@ -1,0 +1,21 @@
+# /etc/systemd/system/mobilite.service
+[Unit]
+Description=Mobilité : suivi de routines et rappels
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=mobilite
+WorkingDirectory=/opt/mobilite
+EnvironmentFile=/opt/mobilite/.env
+ExecStart=/usr/bin/python3 /opt/mobilite/server.py
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/mobilite/data
+
+[Install]
+WantedBy=multi-user.target
