@@ -2,7 +2,7 @@ FROM python:3.12-slim
 RUN apt-get update && apt-get install -y --no-install-recommends tzdata \
     && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
-COPY server.py ./
+COPY server.py content.json ./
 COPY static ./static
 ENV MOB_HOST=0.0.0.0 MOB_PORT=8080 MOB_DB=/data/mobilite.db PYTHONUNBUFFERED=1
 RUN mkdir /data && chown 10001 /data

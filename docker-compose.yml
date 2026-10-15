@@ -9,5 +9,8 @@ services:
       - "127.0.0.1:8080:8080"   # exposé uniquement en local : le reverse proxy fait le HTTPS
     volumes:
       - mobilite-data:/data
+      # Le contenu (exercices, conseils...) est monté depuis ton dossier : tu le modifies
+      # sur le serveur, tu recharges la page, sans reconstruire l'image.
+      - ./content.json:/app/content.json:ro
 volumes:
   mobilite-data:

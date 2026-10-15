@@ -63,6 +63,45 @@ Si le test échoue, regarde les logs du service : le message d'erreur de ntfy y 
 - Une seule relance par séance, après le délai choisi (10, 15 ou 30 min, ou aucune).
 - Jours de pause au bureau, jours de force, heures et rappels on/off se règlent dans l'app.
 
+## Modifier le contenu (exercices, routines, conseils)
+
+Tout le contenu est dans **`content.json`** : tu n'as jamais besoin de toucher au code.
+
+1. Édite `content.json` (n'importe quel éditeur).
+2. Vérifie-le : `python3 server.py --check`. Les erreurs sont en français, avec l'exercice ou la phase concernée ;
+   le fichier n'est pas modifié.
+3. Recharge la page sur le téléphone (tire pour rafraîchir). Pas de redémarrage ni de reconstruction Docker :
+   le serveur relit le fichier à chaque requête, et les notifications reprennent tes nouveaux textes dans la minute.
+
+Si le fichier est cassé (virgule oubliée…), **rien ne plante** : la page garde la dernière version valable
+et le serveur affiche l'erreur dans ses logs.
+
+| Section | Rôle |
+|---|---|
+| `tags` | Zones du corps proposées comme filtres dans l'onglet Exercices. |
+| `exercises` | La bibliothèque. Clé = identifiant stable (`a-z`, `0-9`, `_`), valeur = `name`, `tags`, `how` (la consigne affichée aussi dans le minuteur), `tip` (astuce, facultative), `from_notes` (`true` = étoile ★). |
+| `routines` | `reveil`, `pause`, `coucher` (obligatoires). Chaque étape : `{"ex": "id", "sec": 30}` ; ajoute `"bi": true` pour un exercice fait des deux côtés (`sec` est alors **par côté**, la durée est doublée). |
+| `force` | Textes de l'onglet, `rules` (tableau Rythme, Début…), et `phases` avec leurs exercices : `{"ex": "clam", "dose": "3 × 12 / côté"}`. `minutes` et `sub` servent à la frise et au héros. |
+| `tips` | Les conseils : une liste de `{"title": "...", "items": ["...", "..."]}`, plus `alert` pour l'encadré en bas. |
+| `notifications` | Titre et texte de chaque rappel (`reveil`, `pause`, `force`, `coucher`) et de la relance. |
+
+**Ajouter un exercice à la pause du bureau**
+```json
+"poignets_cercles": {
+  "name": "Cercles de poignets", "tags": ["Bras"], "from_notes": false,
+  "how": "Bras tendus, fais des cercles lents avec les poignets.", "tip": "Utile après la souris."
+}
+```
+puis dans `routines.pause.steps` : `{"ex": "poignets_cercles", "sec": 20}`. Si `tags` utilise une zone nouvelle
+(ici `Bras`), ajoute-la aussi à la liste `tags` du début, sinon l'exercice n'aura pas de filtre.
+
+**Ajouter un conseil** : ajoute un bloc à la liste `tips`. Le texte est affiché tel quel (le HTML n'est pas interprété).
+
+Repères : les routines visent 5 minutes (`--check` prévient au-delà de 30 s d'écart), un exercice peut figurer
+dans plusieurs routines et phases, et retirer un exercice encore utilisé quelque part est signalé comme erreur.
+Avec Docker, `content.json` est monté depuis ton dossier (voir `docker-compose.yml`) ; la **première** mise à jour
+de ce dossier demande un `docker compose up -d --build`, ensuite tes modifications du contenu sont immédiates.
+
 ## Sécurité
 - Un seul utilisateur, un seul jeton (`MOB_TOKEN`), comparaison à temps constant, 10 essais ratés par
   10 minutes et par IP avant blocage temporaire.
@@ -87,11 +126,11 @@ Créneaux : `reveil`, `coucher`, `force`, `pHH:MM` (ex. `p14:00`).
 
 ## Tests
 ```bash
-python3 test_server.py     # lance le serveur et un faux ntfy, 12 tests
+python3 test_server.py     # lance le serveur et un faux ntfy, 17 tests (dont la validation de content.json)
 ```
 
 ## Pistes d'évolution
 - Notifications Web Push natives (sans app ntfy) : ajouter `pywebpush`, des clés VAPID et un abonnement
   côté page et service worker.
 - Export CSV de l'historique, statistiques mensuelles, plusieurs profils.
-- Le plan de force et la bibliothèque d'exercices sont dans `static/index.html` (objets `EX`, `ROUT`, `PH`).
+- Le contenu vit dans `content.json` ; la mise en page est dans `static/index.html`.

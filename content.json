@@ -1,0 +1,366 @@
+{
+  "_aide": "Fichier de contenu : modifie-le puis recharge la page. Vérifie avec : python3 server.py --check. Voir README, section « Modifier le contenu ».",
+  "version": 1,
+  "tags": ["Cou", "Épaules", "Dos", "Hanches", "Fessier"],
+  "exercises": {
+    "marche_respi": {
+      "name": "Se lever et respirer",
+      "tags": ["Dos"],
+      "from_notes": false,
+      "how": "Lève-toi, grandis-toi, marche quelques pas. Trois grandes respirations ventrales : le ventre se gonfle à l'inspiration.",
+      "tip": "Le but est de casser la position assise avant de commencer les étirements."
+    },
+    "cou_mob": {
+      "name": "Mobilité du cou",
+      "tags": ["Cou"],
+      "from_notes": true,
+      "how": "Assis, dos droit. Tourne lentement la tête à droite puis à gauche, puis incline l'oreille vers l'épaule de chaque côté, puis rentre le menton vers la poitrine. Mouvements lents et sans forcer.",
+      "tip": "Au bord du lit, pieds au sol. Amplitude confortable : tu ne cherches pas à aller le plus loin possible."
+    },
+    "cercles_epaules": {
+      "name": "Cercles d'épaules",
+      "tags": ["Épaules"],
+      "from_notes": false,
+      "how": "Bras relâchés. Grands cercles lents avec les épaules : d'abord vers l'arrière, puis vers l'avant.",
+      "tip": "Imagine dessiner un cercle avec le bout de chaque épaule."
+    },
+    "chin_tuck": {
+      "name": "Menton rentré (rétraction cervicale)",
+      "tags": ["Cou"],
+      "from_notes": false,
+      "how": "Assis, regard à l'horizon. Recule la tête en rentrant doucement le menton, comme pour faire un double menton. Tiens 3 secondes, relâche.",
+      "tip": "Le menton ne descend pas : c'est la tête qui recule. 8 répétitions. Excellent contre la tête projetée en avant."
+    },
+    "haussements": {
+      "name": "Haussements d'épaules relâchés",
+      "tags": ["Épaules", "Cou"],
+      "from_notes": false,
+      "how": "Monte les épaules vers les oreilles, tiens 3 secondes, puis relâche d'un coup en soufflant.",
+      "tip": "Le relâchement compte autant que la montée : laisse les épaules tomber."
+    },
+    "etir_elev": {
+      "name": "Étirement de l'élévateur de l'omoplate",
+      "tags": ["Cou", "Épaules"],
+      "from_notes": true,
+      "how": "Assis, main du côté étiré qui tient le bord de la chaise (épaule basse). Tourne le nez vers l'aisselle opposée, puis incline doucement la tête vers l'avant. L'autre main peut peser très légèrement.",
+      "tip": "Étirement à l'arrière-côté du cou. Respire lentement. Jamais de douleur vive ni de fourmillements."
+    },
+    "pectoral_porte": {
+      "name": "Étirement du pectoral dans l'encadrement d'une porte",
+      "tags": ["Épaules", "Dos"],
+      "from_notes": true,
+      "how": "Avant-bras contre l'encadrement, coude à hauteur d'épaule. Petit pas en avant, tourne légèrement le buste à l'opposé, sans cambrer le dos.",
+      "tip": "Tu ouvres le devant de l'épaule, que le travail assis a tendance à refermer. Refais avec le coude plus haut ou plus bas pour étirer d'autres fibres."
+    },
+    "chat_vache": {
+      "name": "Chat et vache",
+      "tags": ["Dos"],
+      "from_notes": false,
+      "how": "À quatre pattes. À l'inspiration, creuse le dos et regarde devant. À l'expiration, arrondis le dos et rentre le menton.",
+      "tip": "Lent, avec la respiration. Bouge toute la colonne, de la nuque au bassin."
+    },
+    "livre_ouvert": {
+      "name": "Rotation du haut du dos (livre ouvert)",
+      "tags": ["Dos", "Épaules"],
+      "from_notes": false,
+      "how": "Allongé sur le côté, genoux pliés et empilés, bras tendus devant. Ouvre le bras du dessus vers l'arrière en suivant la main du regard, bassin immobile. Reviens.",
+      "tip": "Ce qui tourne, c'est le haut du dos, pas le bassin. Souffle en ouvrant."
+    },
+    "psoas_fente": {
+      "name": "Étirement du psoas (fente genou au sol)",
+      "tags": ["Hanches"],
+      "from_notes": false,
+      "how": "Un genou au sol sur un coussin, l'autre pied devant. Bascule le bassin pour rentrer le coccyx, serre la fesse du genou au sol, puis avance doucement le bassin.",
+      "tip": "Sensation à l'avant de la hanche du genou au sol. Lève le bras de ce côté pour intensifier. Pas de creux dans le bas du dos."
+    },
+    "psoas_debout": {
+      "name": "Étirement du psoas debout",
+      "tags": ["Hanches"],
+      "from_notes": false,
+      "how": "Debout, un grand pas en arrière, talon du pied arrière levé. Rentre le coccyx, serre la fesse arrière et avance légèrement le bassin.",
+      "tip": "Version bureau de la fente. Une main sur le mur ou sur la chaise pour l'équilibre."
+    },
+    "thomas": {
+      "name": "Psoas au bord du lit",
+      "tags": ["Hanches"],
+      "from_notes": false,
+      "how": "Allongé sur le dos au bord du lit. Ramène un genou vers ta poitrine avec les mains, l'autre jambe pend dans le vide et se détend.",
+      "tip": "Le bas du dos reste posé sur le lit. Laisse la gravité étirer l'avant de la hanche de la jambe qui pend."
+    },
+    "fessier_debout": {
+      "name": "Levé de jambe sur le côté (moyen fessier)",
+      "tags": ["Fessier", "Hanches"],
+      "from_notes": true,
+      "how": "Debout, une main sur le mur ou la chaise. Lève la jambe sur le côté, pied et bassin de face. Tiens 1 seconde en haut, redescends lentement.",
+      "tip": "Ne penche pas le buste de l'autre côté. Pense à pousser le talon vers l'extérieur plutôt qu'à monter haut."
+    },
+    "enfant": {
+      "name": "Posture de l'enfant",
+      "tags": ["Dos", "Épaules"],
+      "from_notes": false,
+      "how": "Genoux écartés, fesses vers les talons, bras allongés devant, front vers le sol. Respire dans le bas du dos.",
+      "tip": "Si les fesses ne descendent pas, glisse un coussin entre elles et les talons."
+    },
+    "genoux_croises": {
+      "name": "Étirement fessier allongé (jambes croisées)",
+      "tags": ["Fessier", "Hanches"],
+      "from_notes": true,
+      "how": "Allongé sur le dos, croise la cheville droite sur le genou gauche. Ramène le genou gauche vers toi en tenant derrière la cuisse, jusqu'à sentir le fessier droit s'étirer.",
+      "tip": "Épaules et tête restent posées. Ne tire pas sur le genou : travaille avec les mains sur la cuisse."
+    },
+    "rot_genou_leve": {
+      "name": "Rotation genou levé (hanche en rotation)",
+      "tags": ["Fessier", "Hanches"],
+      "from_notes": true,
+      "how": "Assis au sol, jambe avant pliée à 90° devant toi, jambe arrière pliée sur le côté. Redresse le dos, puis penche le buste vers la jambe avant en gardant le dos long.",
+      "tip": "Étirement du fessier côté jambe avant. Mets un coussin sous le fessier si le bassin bascule."
+    },
+    "respi_46": {
+      "name": "Respiration 4-6 allongée",
+      "tags": ["Dos"],
+      "from_notes": false,
+      "how": "Allongé, une main sur le ventre. Inspire 4 secondes par le nez, expire 6 secondes par la bouche.",
+      "tip": "Expire plus longtemps que tu n'inspires : cela calme le système nerveux avant le sommeil."
+    },
+    "clam": {
+      "name": "Coquillage (clam)",
+      "tags": ["Fessier"],
+      "from_notes": true,
+      "how": "Sur le côté, genoux pliés, pieds joints. Ouvre le genou du dessus sans bouger le bassin, comme une coquille. Redescends lentement.",
+      "tip": "Place une main sur le côté de la fesse pour sentir le moyen fessier se contracter. Bassin qui ne roule pas en arrière."
+    },
+    "pont": {
+      "name": "Pont fessier",
+      "tags": ["Fessier", "Dos"],
+      "from_notes": false,
+      "how": "Sur le dos, pieds à plat. Pousse dans les talons et monte le bassin jusqu'à aligner genoux, bassin et épaules. Tiens 2 secondes.",
+      "tip": "Les côtes restent basses : pas de cambrure. Serre les fessiers en haut, pas le bas du dos."
+    },
+    "leve_lat": {
+      "name": "Levés latéraux sur bloc / debout",
+      "tags": ["Fessier"],
+      "from_notes": true,
+      "how": "Debout sur une jambe, appui léger au mur. Lève l'autre jambe sur le côté, lentement, bassin de niveau. Variante : debout sur un bloc, la jambe libre descend sous le niveau du bloc.",
+      "tip": "C'est le bassin de la jambe d'appui qui travaille : il ne doit pas s'affaisser."
+    },
+    "pas_cote": {
+      "name": "Pas de côté avec élastique",
+      "tags": ["Fessier"],
+      "from_notes": true,
+      "how": "Élastique autour des cuisses (au-dessus des genoux) ou des chevilles. Genoux légèrement pliés, bassin bas, fais des pas latéraux sans te redresser.",
+      "tip": "Maintiens de la tension tout le long. Les pieds restent parallèles, genoux dans l'axe des orteils."
+    },
+    "rowing": {
+      "name": "Tirage horizontal à l'élastique (rowing)",
+      "tags": ["Dos", "Épaules"],
+      "from_notes": true,
+      "how": "Élastique fixé devant toi à hauteur de poitrine. Tire les coudes vers l'arrière en rapprochant les omoplates, puis reviens lentement.",
+      "tip": "Sur ta planche, le rowing debout se fait barre vers le menton ; la version horizontale à l'élastique est plus douce pour les épaules."
+    },
+    "shrug": {
+      "name": "Haussements d'épaules avec haltères",
+      "tags": ["Épaules", "Cou"],
+      "from_notes": true,
+      "how": "Debout, un haltère léger dans chaque main, bras le long du corps. Monte les épaules vers les oreilles, tiens 2 secondes, redescends en 3 secondes.",
+      "tip": "Charge légère (2 à 5 kg). Pas de rotation des épaules. Si le cou se raidit, arrête et parles-en à ton ostéo."
+    },
+    "face_pull": {
+      "name": "Tirage visage à l'élastique",
+      "tags": ["Épaules", "Dos"],
+      "from_notes": false,
+      "how": "Élastique fixé à hauteur de visage. Tire vers le visage en écartant les mains, coudes hauts, et ouvre légèrement les poings à la fin.",
+      "tip": "Renforce l'arrière de l'épaule et le haut du dos, qui ramènent les épaules en arrière."
+    },
+    "wall_angel": {
+      "name": "Anges au mur",
+      "tags": ["Épaules", "Dos"],
+      "from_notes": false,
+      "how": "Dos, tête et bassin contre le mur, pieds légèrement avancés. Bras en « W » contre le mur, puis monte-les en « Y » en gardant les mains et coudes en contact autant que possible.",
+      "tip": "Si tu ne peux pas garder le contact, réduis l'amplitude. C'est un test de mobilité autant qu'un exercice."
+    },
+    "dead_bug": {
+      "name": "Insecte mort (dead bug)",
+      "tags": ["Dos"],
+      "from_notes": false,
+      "how": "Sur le dos, bras vers le plafond, genoux à 90° au-dessus des hanches. Descends lentement un bras et la jambe opposée, sans cambrer. Reviens et alterne.",
+      "tip": "Le bas du dos reste collé au sol. Si ça se creuse, réduis l'amplitude."
+    },
+    "bird_dog": {
+      "name": "Oiseau-chien (bird dog)",
+      "tags": ["Dos", "Fessier"],
+      "from_notes": false,
+      "how": "À quatre pattes. Tends un bras et la jambe opposée dans l'alignement du dos. Tiens 2 secondes, reviens, alterne.",
+      "tip": "Imagine un verre d'eau posé sur le bas du dos : il ne doit pas bouger."
+    },
+    "planche_lat": {
+      "name": "Planche latérale sur genoux",
+      "tags": ["Fessier", "Dos"],
+      "from_notes": false,
+      "how": "Sur le côté, appui sur l'avant-bras, genoux pliés. Monte le bassin pour aligner épaule, bassin et genoux. Tiens.",
+      "tip": "Le bassin ne tombe pas vers l'avant ou l'arrière. Progresse ensuite vers les jambes tendues."
+    },
+    "step_up": {
+      "name": "Montée latérale sur marche",
+      "tags": ["Fessier"],
+      "from_notes": false,
+      "how": "Debout de côté face à une marche, monte un pied dessus puis redresse-toi en poussant dans le talon. Redescends lentement.",
+      "tip": "Travaille surtout le moyen fessier de la jambe qui monte. Tiens-toi au besoin."
+    },
+    "psoas_actif": {
+      "name": "Genou levé tenu (psoas actif)",
+      "tags": ["Hanches"],
+      "from_notes": false,
+      "how": "Debout, monte un genou à hauteur de hanche et tiens 3 secondes sans pencher le buste. Redescends en contrôle.",
+      "tip": "Après avoir étiré le psoas, tu le renforces dans sa course complète : il n'est plus à la fois court et faible."
+    }
+  },
+  "routines": {
+    "reveil": {
+      "label": "Réveil",
+      "when": "Au réveil",
+      "sub": "Au bord du lit, puis au sol",
+      "steps": [
+        {"ex": "cou_mob", "sec": 45},
+        {"ex": "cercles_epaules", "sec": 30},
+        {"ex": "etir_elev", "sec": 25, "bi": true},
+        {"ex": "chat_vache", "sec": 45},
+        {"ex": "livre_ouvert", "sec": 30, "bi": true},
+        {"ex": "psoas_fente", "sec": 35, "bi": true}
+      ]
+    },
+    "pause": {
+      "label": "Pause du bureau",
+      "when": "Toutes les 2 heures",
+      "sub": "Debout, à côté de ta chaise",
+      "steps": [
+        {"ex": "marche_respi", "sec": 30},
+        {"ex": "chin_tuck", "sec": 30},
+        {"ex": "haussements", "sec": 25},
+        {"ex": "pectoral_porte", "sec": 45},
+        {"ex": "etir_elev", "sec": 25, "bi": true},
+        {"ex": "psoas_debout", "sec": 30, "bi": true},
+        {"ex": "fessier_debout", "sec": 30, "bi": true}
+      ]
+    },
+    "coucher": {
+      "label": "Coucher",
+      "when": "Avant de dormir",
+      "sub": "Bord du lit puis allongé",
+      "steps": [
+        {"ex": "cou_mob", "sec": 50},
+        {"ex": "enfant", "sec": 45},
+        {"ex": "genoux_croises", "sec": 35, "bi": true},
+        {"ex": "thomas", "sec": 30, "bi": true},
+        {"ex": "respi_46", "sec": 75}
+      ]
+    }
+  },
+  "force": {
+    "title": "Renforcer ce qui lâche",
+    "intro": "Les pauses assouplissent ; la force fait tenir le résultat. Moyen fessier pour stabiliser le bassin et soulager le bas du dos, haut du dos pour que les épaules et le cou arrêtent de tout porter.",
+    "minutes": 20,
+    "sub": "Moyen fessier et haut du dos",
+    "rules": [
+      ["Rythme", "3 séances de 20 minutes par semaine, jamais deux jours de suite pour la même zone (ex. lundi, mercredi, samedi)."],
+      ["Début", "Routine du réveil, ou 3 minutes de mobilité, pour chauffer."],
+      ["Fin", "Rotation genou levé et étirement du pectoral (1 minute chacun)."],
+      ["Intensité", "Effort de 6 à 7 sur 10. Les dernières répétitions sont exigeantes mais propres, sans douleur."],
+      ["Progression", "Quand toutes les séries se font facilement : ajoute des répétitions, puis passe à un élastique plus dur."]
+    ],
+    "phases": [
+      {
+        "name": "Phase 1",
+        "weeks": "Semaines 1 et 2",
+        "goal": "Apprendre les gestes et sentir le moyen fessier travailler.",
+        "items": [
+          {"ex": "clam", "dose": "2 × 10 / côté"},
+          {"ex": "pont", "dose": "2 × 10"},
+          {"ex": "leve_lat", "dose": "2 × 10 / côté"},
+          {"ex": "rowing", "dose": "2 × 12"},
+          {"ex": "wall_angel", "dose": "2 × 8"},
+          {"ex": "dead_bug", "dose": "2 × 6 / côté"}
+        ]
+      },
+      {
+        "name": "Phase 2",
+        "weeks": "Semaines 3 et 4",
+        "goal": "Ajouter de la résistance et de la stabilité.",
+        "items": [
+          {"ex": "clam", "dose": "3 × 12 / côté (élastique)"},
+          {"ex": "pont", "dose": "3 × 12"},
+          {"ex": "pas_cote", "dose": "3 × 10 pas / sens"},
+          {"ex": "rowing", "dose": "3 × 12"},
+          {"ex": "face_pull", "dose": "2 × 12"},
+          {"ex": "bird_dog", "dose": "2 × 8 / côté"},
+          {"ex": "planche_lat", "dose": "2 × 20 s / côté"}
+        ]
+      },
+      {
+        "name": "Phase 3",
+        "weeks": "Semaines 5 à 8",
+        "goal": "Consolider : plus de charge, plus de contrôle, haut du dos et hanches.",
+        "items": [
+          {"ex": "pont", "dose": "3 × 8 sur une jambe"},
+          {"ex": "step_up", "dose": "3 × 8 / côté"},
+          {"ex": "planche_lat", "dose": "3 × 25 s / côté"},
+          {"ex": "rowing", "dose": "3 × 10 (élastique plus dur)"},
+          {"ex": "face_pull", "dose": "3 × 15"},
+          {"ex": "shrug", "dose": "3 × 12 lents (charge légère)"},
+          {"ex": "psoas_actif", "dose": "3 × 6 / côté"}
+        ]
+      }
+    ]
+  },
+  "tips": [
+    {
+      "title": "Au bureau",
+      "items": ["Écran : le haut au niveau des yeux, à un bras de distance. Le menton ne doit ni avancer ni plonger.", "Coudes à 90° près du corps, épaules basses. Pieds à plat, bassin légèrement plus haut que les genoux si possible.", "Alterne assis et debout si tu as un bureau réglable. Sinon, téléphone ou visio debout, et marche pendant les appels.", "Entre deux pauses de 5 minutes : change de position toutes les 30 à 45 minutes (1 minute suffit : te lever, aller chercher de l'eau)."]
+    },
+    {
+      "title": "Marcher, tout simplement",
+      "items": ["Vise 7 000 à 8 000 pas par jour, dont une marche de 20 à 30 minutes. La marche réveille les fessiers et détend les hanches.", "Garde les pas souples : épaules relâchées, bras qui se balancent."]
+    },
+    {
+      "title": "Pilates, bonne idée",
+      "items": ["Une séance par semaine, en cours débutant ou en petit groupe, colle exactement à ton besoin : mobilité de la colonne, contrôle du bassin, respiration.", "Préviens le professeur de ce que ton ostéo a observé (épaules, cervicales, bas du dos, moyen fessier, psoas).", "Alternative qui complète bien : natation (dos crawlé, crawl) ou yoga doux."]
+    },
+    {
+      "title": "Respiration et stress",
+      "items": ["Quand on est tendu, les épaules montent et le cou se raidit. Trois respirations ventrales lentes (4 secondes en inspirant, 6 en expirant) à chaque pause.", "Chaleur 10 minutes sur les trapèzes en fin de journée si le haut du dos est tendu."]
+    },
+    {
+      "title": "Sommeil",
+      "items": ["Oreiller qui garde le cou aligné avec la colonne : ni trop haut ni trop plat.", "Sur le côté : un coussin entre les genoux protège le bassin. Sur le dos : un petit coussin sous les genoux.", "Le coucher de la routine se fait idéalement 20 à 30 minutes avant d'éteindre."]
+    },
+    {
+      "title": "Faire durer l'habitude",
+      "items": ["Accroche chaque routine à un geste déjà installé : le réveil sonne, tu t'assieds au bord du lit ; tu poses ton café, tu te lèves ; tu brosses les dents, tu t'allonges.", "Mieux vaut 3 minutes faites que 5 minutes repoussées. Une séance sautée ne casse rien : reprends à la suivante.", "Refais le point avec ton ostéo à 4 à 6 semaines pour ajuster le programme."]
+    }
+  ],
+  "alert": {
+    "title": "À savoir.",
+    "text": "Ces conseils sont généraux et ne remplacent pas ceux de ton ostéo ou d'un kinésithérapeute : montre-lui ce plan et demande-lui de valider les exercices, surtout ceux avec charge. Un étirement doit tirer sans jamais faire mal. Arrête et consulte en cas de douleur vive, de fourmillements ou d'engourdissements dans un bras ou une jambe, de vertiges, ou de douleur qui s'aggrave."
+  },
+  "notifications": {
+    "reveil": {
+      "title": "Routine du réveil",
+      "body": "5 minutes au bord du lit : cou, épaules, dos, psoas."
+    },
+    "pause": {
+      "title": "Pause mouvement",
+      "body": "Lève-toi 5 minutes : menton rentré, pectoral, hanches, moyen fessier."
+    },
+    "force": {
+      "title": "Séance de force",
+      "body": "20 minutes : moyen fessier et haut du dos."
+    },
+    "coucher": {
+      "title": "Routine du coucher",
+      "body": "5 minutes pour relâcher le cou, les fessiers et les hanches."
+    },
+    "relance": {
+      "prefix": "Pas encore fait ? ",
+      "body": "Deux minutes comptent déjà. Lance-toi."
+    }
+  }
+}

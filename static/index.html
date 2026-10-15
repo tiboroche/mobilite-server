@@ -236,15 +236,9 @@ details.ex .body em{color:var(--muted);font-style:normal;font-size:14px}
   </section>
 
   <section class="panel" id="p-force" role="tabpanel" aria-labelledby="t-force" hidden>
-    <h2 class="sec">Renforcer ce qui lâche</h2>
-    <p class="lead">Les pauses assouplissent ; la force fait tenir le résultat. Moyen fessier pour stabiliser le bassin et soulager le bas du dos, haut du dos pour que les épaules et le cou arrêtent de tout porter.</p>
-    <table class="table">
-      <tr><td>Rythme</td><td>3 séances de 20 minutes par semaine, jamais deux jours de suite pour la même zone (ex. lundi, mercredi, samedi).</td></tr>
-      <tr><td>Début</td><td>Routine du réveil, ou 3 minutes de mobilité, pour chauffer.</td></tr>
-      <tr><td>Fin</td><td>Rotation genou levé et étirement du pectoral (1 minute chacun).</td></tr>
-      <tr><td>Intensité</td><td>Effort de 6 à 7 sur 10. Les dernières répétitions sont exigeantes mais propres, sans douleur.</td></tr>
-      <tr><td>Progression</td><td>Quand toutes les séries se font facilement : ajoute des répétitions, puis passe à un élastique plus dur.</td></tr>
-    </table>
+    <h2 class="sec" id="force-title"></h2>
+    <p class="lead" id="force-intro"></p>
+    <table class="table" id="force-rules"></table>
     <div class="seg" id="phase-seg" role="group" aria-label="Phase du plan"></div>
     <p class="goal" id="phase-goal"></p>
     <div id="phase-list"></div>
@@ -261,38 +255,7 @@ details.ex .body em{color:var(--muted);font-style:normal;font-size:14px}
   </section>
 
   <section class="panel" id="p-tips" role="tabpanel" aria-labelledby="t-tips" hidden>
-    <div class="tips">
-      <div class="tip"><h3>Au bureau</h3><ul>
-        <li>Écran : le haut au niveau des yeux, à un bras de distance. Le menton ne doit ni avancer ni plonger.</li>
-        <li>Coudes à 90° près du corps, épaules basses. Pieds à plat, bassin légèrement plus haut que les genoux si possible.</li>
-        <li>Alterne assis et debout si tu as un bureau réglable. Sinon, téléphone ou visio debout, et marche pendant les appels.</li>
-        <li>Entre deux pauses de 5 minutes : change de position toutes les 30 à 45 minutes (1 minute suffit : te lever, aller chercher de l'eau).</li>
-      </ul></div>
-      <div class="tip"><h3>Marcher, tout simplement</h3><ul>
-        <li>Vise 7 000 à 8 000 pas par jour, dont une marche de 20 à 30 minutes. La marche réveille les fessiers et détend les hanches.</li>
-        <li>Garde les pas souples : épaules relâchées, bras qui se balancent.</li>
-      </ul></div>
-      <div class="tip"><h3>Pilates, bonne idée</h3><ul>
-        <li>Une séance par semaine, en cours débutant ou en petit groupe, colle exactement à ton besoin : mobilité de la colonne, contrôle du bassin, respiration.</li>
-        <li>Préviens le professeur de ce que ton ostéo a observé (épaules, cervicales, bas du dos, moyen fessier, psoas).</li>
-        <li>Alternative qui complète bien : natation (dos crawlé, crawl) ou yoga doux.</li>
-      </ul></div>
-      <div class="tip"><h3>Respiration et stress</h3><ul>
-        <li>Quand on est tendu, les épaules montent et le cou se raidit. Trois respirations ventrales lentes (4 secondes en inspirant, 6 en expirant) à chaque pause.</li>
-        <li>Chaleur 10 minutes sur les trapèzes en fin de journée si le haut du dos est tendu.</li>
-      </ul></div>
-      <div class="tip"><h3>Sommeil</h3><ul>
-        <li>Oreiller qui garde le cou aligné avec la colonne : ni trop haut ni trop plat.</li>
-        <li>Sur le côté : un coussin entre les genoux protège le bassin. Sur le dos : un petit coussin sous les genoux.</li>
-        <li>Le coucher de la routine se fait idéalement 20 à 30 minutes avant d'éteindre.</li>
-      </ul></div>
-      <div class="tip"><h3>Faire durer l'habitude</h3><ul>
-        <li>Accroche chaque routine à un geste déjà installé : le réveil sonne, tu t'assieds au bord du lit ; tu poses ton café, tu te lèves ; tu brosses les dents, tu t'allonges.</li>
-        <li>Mieux vaut 3 minutes faites que 5 minutes repoussées. Une séance sautée ne casse rien : reprends à la suivante.</li>
-        <li>Refais le point avec ton ostéo à 4 à 6 semaines pour ajuster le programme.</li>
-      </ul></div>
-      <div class="alert"><strong>À savoir.</strong> Ces conseils sont généraux et ne remplacent pas ceux de ton ostéo ou d'un kinésithérapeute : montre-lui ce plan et demande-lui de valider les exercices, surtout ceux avec charge. Un étirement doit tirer sans jamais faire mal. Arrête et consulte en cas de douleur vive, de fourmillements ou d'engourdissements dans un bras ou une jambe, de vertiges, ou de douleur qui s'aggrave.</div>
-    </div>
+    <div class="tips" id="tips"></div>
   </section>
 </main>
 
@@ -333,50 +296,38 @@ details.ex .body em{color:var(--muted);font-style:normal;font-size:14px}
 </div>
 
 <script>
-/* ---------- Données : exercices ---------- */
-var EX = {
-  marche_respi:{name:"Se lever et respirer",tags:["Dos"],src:false,how:"Lève-toi, grandis-toi, marche quelques pas. Trois grandes respirations ventrales : le ventre se gonfle à l'inspiration.",tip:"Le but est de casser la position assise avant de commencer les étirements."},
-  cou_mob:{name:"Mobilité du cou",tags:["Cou"],src:true,how:"Assis, dos droit. Tourne lentement la tête à droite puis à gauche, puis incline l'oreille vers l'épaule de chaque côté, puis rentre le menton vers la poitrine. Mouvements lents et sans forcer.",tip:"Au bord du lit, pieds au sol. Amplitude confortable : tu ne cherches pas à aller le plus loin possible."},
-  cercles_epaules:{name:"Cercles d'épaules",tags:["Épaules"],src:false,how:"Bras relâchés. Grands cercles lents avec les épaules : d'abord vers l'arrière, puis vers l'avant.",tip:"Imagine dessiner un cercle avec le bout de chaque épaule."},
-  chin_tuck:{name:"Menton rentré (rétraction cervicale)",tags:["Cou"],src:false,how:"Assis, regard à l'horizon. Recule la tête en rentrant doucement le menton, comme pour faire un double menton. Tiens 3 secondes, relâche.",tip:"Le menton ne descend pas : c'est la tête qui recule. 8 répétitions. Excellent contre la tête projetée en avant."},
-  haussements:{name:"Haussements d'épaules relâchés",tags:["Épaules","Cou"],src:false,how:"Monte les épaules vers les oreilles, tiens 3 secondes, puis relâche d'un coup en soufflant.",tip:"Le relâchement compte autant que la montée : laisse les épaules tomber."},
-  etir_elev:{name:"Étirement de l'élévateur de l'omoplate",tags:["Cou","Épaules"],src:true,how:"Assis, main du côté étiré qui tient le bord de la chaise (épaule basse). Tourne le nez vers l'aisselle opposée, puis incline doucement la tête vers l'avant. L'autre main peut peser très légèrement.",tip:"Étirement à l'arrière-côté du cou. Respire lentement. Jamais de douleur vive ni de fourmillements."},
-  pectoral_porte:{name:"Étirement du pectoral dans l'encadrement d'une porte",tags:["Épaules","Dos"],src:true,how:"Avant-bras contre l'encadrement, coude à hauteur d'épaule. Petit pas en avant, tourne légèrement le buste à l'opposé, sans cambrer le dos.",tip:"Tu ouvres le devant de l'épaule, que le travail assis a tendance à refermer. Refais avec le coude plus haut ou plus bas pour étirer d'autres fibres."},
-  chat_vache:{name:"Chat et vache",tags:["Dos"],src:false,how:"À quatre pattes. À l'inspiration, creuse le dos et regarde devant. À l'expiration, arrondis le dos et rentre le menton.",tip:"Lent, avec la respiration. Bouge toute la colonne, de la nuque au bassin."},
-  livre_ouvert:{name:"Rotation du haut du dos (livre ouvert)",tags:["Dos","Épaules"],src:false,how:"Allongé sur le côté, genoux pliés et empilés, bras tendus devant. Ouvre le bras du dessus vers l'arrière en suivant la main du regard, bassin immobile. Reviens.",tip:"Ce qui tourne, c'est le haut du dos, pas le bassin. Souffle en ouvrant."},
-  psoas_fente:{name:"Étirement du psoas (fente genou au sol)",tags:["Hanches"],src:false,how:"Un genou au sol sur un coussin, l'autre pied devant. Bascule le bassin pour rentrer le coccyx, serre la fesse du genou au sol, puis avance doucement le bassin.",tip:"Sensation à l'avant de la hanche du genou au sol. Lève le bras de ce côté pour intensifier. Pas de creux dans le bas du dos."},
-  psoas_debout:{name:"Étirement du psoas debout",tags:["Hanches"],src:false,how:"Debout, un grand pas en arrière, talon du pied arrière levé. Rentre le coccyx, serre la fesse arrière et avance légèrement le bassin.",tip:"Version bureau de la fente. Une main sur le mur ou sur la chaise pour l'équilibre."},
-  thomas:{name:"Psoas au bord du lit",tags:["Hanches"],src:false,how:"Allongé sur le dos au bord du lit. Ramène un genou vers ta poitrine avec les mains, l'autre jambe pend dans le vide et se détend.",tip:"Le bas du dos reste posé sur le lit. Laisse la gravité étirer l'avant de la hanche de la jambe qui pend."},
-  fessier_debout:{name:"Levé de jambe sur le côté (moyen fessier)",tags:["Fessier","Hanches"],src:true,how:"Debout, une main sur le mur ou la chaise. Lève la jambe sur le côté, pied et bassin de face. Tiens 1 seconde en haut, redescends lentement.",tip:"Ne penche pas le buste de l'autre côté. Pense à pousser le talon vers l'extérieur plutôt qu'à monter haut."},
-  enfant:{name:"Posture de l'enfant",tags:["Dos","Épaules"],src:false,how:"Genoux écartés, fesses vers les talons, bras allongés devant, front vers le sol. Respire dans le bas du dos.",tip:"Si les fesses ne descendent pas, glisse un coussin entre elles et les talons."},
-  genoux_croises:{name:"Étirement fessier allongé (jambes croisées)",tags:["Fessier","Hanches"],src:true,how:"Allongé sur le dos, croise la cheville droite sur le genou gauche. Ramène le genou gauche vers toi en tenant derrière la cuisse, jusqu'à sentir le fessier droit s'étirer.",tip:"Épaules et tête restent posées. Ne tire pas sur le genou : travaille avec les mains sur la cuisse."},
-  rot_genou_leve:{name:"Rotation genou levé (hanche en rotation)",tags:["Fessier","Hanches"],src:true,how:"Assis au sol, jambe avant pliée à 90° devant toi, jambe arrière pliée sur le côté. Redresse le dos, puis penche le buste vers la jambe avant en gardant le dos long.",tip:"Étirement du fessier côté jambe avant. Mets un coussin sous le fessier si le bassin bascule."},
-  respi_46:{name:"Respiration 4-6 allongée",tags:["Dos"],src:false,how:"Allongé, une main sur le ventre. Inspire 4 secondes par le nez, expire 6 secondes par la bouche.",tip:"Expire plus longtemps que tu n'inspires : cela calme le système nerveux avant le sommeil."},
-  clam:{name:"Coquillage (clam)",tags:["Fessier"],src:true,how:"Sur le côté, genoux pliés, pieds joints. Ouvre le genou du dessus sans bouger le bassin, comme une coquille. Redescends lentement.",tip:"Place une main sur le côté de la fesse pour sentir le moyen fessier se contracter. Bassin qui ne roule pas en arrière."},
-  pont:{name:"Pont fessier",tags:["Fessier","Dos"],src:false,how:"Sur le dos, pieds à plat. Pousse dans les talons et monte le bassin jusqu'à aligner genoux, bassin et épaules. Tiens 2 secondes.",tip:"Les côtes restent basses : pas de cambrure. Serre les fessiers en haut, pas le bas du dos."},
-  leve_lat:{name:"Levés latéraux sur bloc / debout",tags:["Fessier"],src:true,how:"Debout sur une jambe, appui léger au mur. Lève l'autre jambe sur le côté, lentement, bassin de niveau. Variante : debout sur un bloc, la jambe libre descend sous le niveau du bloc.",tip:"C'est le bassin de la jambe d'appui qui travaille : il ne doit pas s'affaisser."},
-  pas_cote:{name:"Pas de côté avec élastique",tags:["Fessier"],src:true,how:"Élastique autour des cuisses (au-dessus des genoux) ou des chevilles. Genoux légèrement pliés, bassin bas, fais des pas latéraux sans te redresser.",tip:"Maintiens de la tension tout le long. Les pieds restent parallèles, genoux dans l'axe des orteils."},
-  rowing:{name:"Tirage horizontal à l'élastique (rowing)",tags:["Dos","Épaules"],src:true,how:"Élastique fixé devant toi à hauteur de poitrine. Tire les coudes vers l'arrière en rapprochant les omoplates, puis reviens lentement.",tip:"Sur ta planche, le rowing debout se fait barre vers le menton ; la version horizontale à l'élastique est plus douce pour les épaules."},
-  shrug:{name:"Haussements d'épaules avec haltères",tags:["Épaules","Cou"],src:true,how:"Debout, un haltère léger dans chaque main, bras le long du corps. Monte les épaules vers les oreilles, tiens 2 secondes, redescends en 3 secondes.",tip:"Charge légère (2 à 5 kg). Pas de rotation des épaules. Si le cou se raidit, arrête et parles-en à ton ostéo."},
-  face_pull:{name:"Tirage visage à l'élastique",tags:["Épaules","Dos"],src:false,how:"Élastique fixé à hauteur de visage. Tire vers le visage en écartant les mains, coudes hauts, et ouvre légèrement les poings à la fin.",tip:"Renforce l'arrière de l'épaule et le haut du dos, qui ramènent les épaules en arrière."},
-  wall_angel:{name:"Anges au mur",tags:["Épaules","Dos"],src:false,how:"Dos, tête et bassin contre le mur, pieds légèrement avancés. Bras en « W » contre le mur, puis monte-les en « Y » en gardant les mains et coudes en contact autant que possible.",tip:"Si tu ne peux pas garder le contact, réduis l'amplitude. C'est un test de mobilité autant qu'un exercice."},
-  dead_bug:{name:"Insecte mort (dead bug)",tags:["Dos"],src:false,how:"Sur le dos, bras vers le plafond, genoux à 90° au-dessus des hanches. Descends lentement un bras et la jambe opposée, sans cambrer. Reviens et alterne.",tip:"Le bas du dos reste collé au sol. Si ça se creuse, réduis l'amplitude."},
-  bird_dog:{name:"Oiseau-chien (bird dog)",tags:["Dos","Fessier"],src:false,how:"À quatre pattes. Tends un bras et la jambe opposée dans l'alignement du dos. Tiens 2 secondes, reviens, alterne.",tip:"Imagine un verre d'eau posé sur le bas du dos : il ne doit pas bouger."},
-  planche_lat:{name:"Planche latérale sur genoux",tags:["Fessier","Dos"],src:false,how:"Sur le côté, appui sur l'avant-bras, genoux pliés. Monte le bassin pour aligner épaule, bassin et genoux. Tiens.",tip:"Le bassin ne tombe pas vers l'avant ou l'arrière. Progresse ensuite vers les jambes tendues."},
-  step_up:{name:"Montée latérale sur marche",tags:["Fessier"],src:false,how:"Debout de côté face à une marche, monte un pied dessus puis redresse-toi en poussant dans le talon. Redescends lentement.",tip:"Travaille surtout le moyen fessier de la jambe qui monte. Tiens-toi au besoin."},
-  psoas_actif:{name:"Genou levé tenu (psoas actif)",tags:["Hanches"],src:false,how:"Debout, monte un genou à hauteur de hanche et tiens 3 secondes sans pencher le buste. Redescends en contrôle.",tip:"Après avoir étiré le psoas, tu le renforces dans sa course complète : il n'est plus à la fois court et faible."}
-};
-
-/* ---------- Routines ---------- */
-// étape = [id, secondes (par côté si bi), bi]
-var ROUT = {
-  reveil:{label:"Réveil",sub:"Au bord du lit, puis au sol",steps:[["cou_mob",45],["cercles_epaules",30],["etir_elev",25,true],["chat_vache",45],["livre_ouvert",30,true],["psoas_fente",35,true]]},
-  pause:{label:"Pause du bureau",sub:"Debout, à côté de ta chaise",steps:[["marche_respi",30],["chin_tuck",30],["haussements",25],["pectoral_porte",45],["etir_elev",25,true],["psoas_debout",30,true],["fessier_debout",30,true]]},
-  coucher:{label:"Coucher",sub:"Bord du lit puis allongé",steps:[["cou_mob",50],["enfant",45],["genoux_croises",35,true],["thomas",30,true],["respi_46",75]]}
-};
+/* ---------- Contenu (chargé depuis content.json) ---------- */
+// Exercices, routines, plan de force, conseils : tout vient de content.json. Ne modifie pas ce code pour changer le contenu.
+var EX={},ROUT={},PH=[],FORCE={},TIPS=[],TAGS=[],ALERT={},CONTENT_OK=false,CONTENTK="mobilite_content_v1";
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function applyContent(c){
+  var ex=c.exercises||{},ok={};
+  Object.keys(ex).forEach(function(k){
+    var e=ex[k];
+    if(e&&e.name)ok[k]={name:e.name,tags:e.tags||[],src:!!e.from_notes,how:e.how||"",tip:e.tip||""};
+  });
+  var rt={};
+  Object.keys(c.routines||{}).forEach(function(k){
+    var r=c.routines[k],st=(r.steps||[]).filter(function(s){
+      if(!ok[s.ex]){console.warn("Routine "+k+" : exercice inconnu « "+s.ex+" »");return false}
+      return +s.sec>0;
+    }).map(function(s){return [s.ex,+s.sec,!!s.bi]});
+    if(st.length)rt[k]={label:r.label||k,when:r.when||"",sub:r.sub||"",steps:st};
+  });
+  var f=c.force||{};
+  PH=(f.phases||[]).map(function(p){
+    return {n:p.name||"",w:p.weeks||"",goal:p.goal||"",items:(p.items||[]).filter(function(i){
+      if(!ok[i.ex]){console.warn("Plan de force : exercice inconnu « "+i.ex+" »");return false}
+      return true;
+    }).map(function(i){return [i.ex,i.dose||""]})};
+  });
+  EX=ok;ROUT=rt;FORCE=f;TIPS=c.tips||[];TAGS=c.tags||[];ALERT=c.alert||{};
+  if(phase>=PH.length)phase=0;
+  CONTENT_OK=true;
+}
 function expand(rid){
-  var out=[];
-  ROUT[rid].steps.forEach(function(s){
+  var out=[],r=ROUT[rid];if(!r)return out;
+  r.steps.forEach(function(s){
     var e=EX[s[0]];
     if(s[2]){["Côté gauche","Côté droit"].forEach(function(sd){out.push({id:s[0],name:e.name,side:sd,sec:s[1],how:e.how})})}
     else out.push({id:s[0],name:e.name,side:"",sec:s[1],how:e.how});
@@ -385,16 +336,6 @@ function expand(rid){
 }
 function totalSec(rid){return expand(rid).reduce(function(a,s){return a+s.sec},0)}
 function fmtMin(sec){var m=Math.round(sec/60);return m+" min"}
-
-/* ---------- Plan de force ---------- */
-var PH = [
-  {n:"Phase 1",w:"Semaines 1 et 2",goal:"Apprendre les gestes et sentir le moyen fessier travailler.",items:[
-    ["clam","2 × 10 / côté"],["pont","2 × 10"],["leve_lat","2 × 10 / côté"],["rowing","2 × 12"],["wall_angel","2 × 8"],["dead_bug","2 × 6 / côté"]]},
-  {n:"Phase 2",w:"Semaines 3 et 4",goal:"Ajouter de la résistance et de la stabilité.",items:[
-    ["clam","3 × 12 / côté (élastique)"],["pont","3 × 12"],["pas_cote","3 × 10 pas / sens"],["rowing","3 × 12"],["face_pull","2 × 12"],["bird_dog","2 × 8 / côté"],["planche_lat","2 × 20 s / côté"]]},
-  {n:"Phase 3",w:"Semaines 5 à 8",goal:"Consolider : plus de charge, plus de contrôle, haut du dos et hanches.",items:[
-    ["pont","3 × 8 sur une jambe"],["step_up","3 × 8 / côté"],["planche_lat","3 × 25 s / côté"],["rowing","3 × 10 (élastique plus dur)"],["face_pull","3 × 15"],["shrug","3 × 12 lents (charge légère)"],["psoas_actif","3 × 6 / côté"]]}
-];
 
 /* ---------- Utilitaires ---------- */
 function $(s,r){return (r||document).querySelector(s)}
@@ -465,15 +406,16 @@ function askToken(){
 }
 
 /* ---------- Créneaux ---------- */
+function rlabel(id,def){return (ROUT[id]&&ROUT[id].label)||def}
 function slotsFor(dt){
   var c=S.cfg,dow=(dt.getDay()+6)%7;
-  var out=[{id:"reveil",time:c.wake,label:"Réveil",routine:"reveil"}];
+  var out=[{id:"reveil",time:c.wake,label:rlabel("reveil","Réveil"),routine:"reveil"}];
   if(c.workdays.indexOf(dow)>-1){
     var m=toMin(c.start),e=toMin(c.end),step=Math.max(1,+c.every)*60;
-    for(;m<=e;m+=step)out.push({id:"p"+fromMin(m),time:fromMin(m),label:"Pause du bureau",routine:"pause"});
+    for(;m<=e;m+=step)out.push({id:"p"+fromMin(m),time:fromMin(m),label:rlabel("pause","Pause du bureau"),routine:"pause"});
   }
-  if(c.force_days.indexOf(dow)>-1)out.push({id:"force",time:c.force_time,label:"Séance de force",routine:null});
-  out.push({id:"coucher",time:c.bed,label:"Coucher",routine:"coucher"});
+  if(c.force_days.indexOf(dow)>-1)out.push({id:"force",time:c.force_time,label:(FORCE.label||"Séance de force"),routine:null});
+  out.push({id:"coucher",time:c.bed,label:rlabel("coucher","Coucher"),routine:"coucher"});
   out.sort(function(a,b){return toMin(a.time)-toMin(b.time)});
   return out;
 }
@@ -488,8 +430,8 @@ function relTime(diff){
   return "Dans "+h+" h"+(m?" "+pad(m):"");
 }
 function slotInfo(s){
-  if(s.routine){var r=ROUT[s.routine];return {sub:r.sub,dur:fmtMin(totalSec(s.routine))}}
-  return {sub:"Moyen fessier et haut du dos",dur:"20 min"};
+  if(s.routine){var r=ROUT[s.routine]||{sub:""};return {sub:r.sub,dur:fmtMin(totalSec(s.routine))}}
+  return {sub:FORCE.sub||"",dur:(FORCE.minutes||20)+" min"};
 }
 function launch(s){
   if(s.routine)startRoutine(s.routine,s.id);
@@ -503,12 +445,12 @@ function renderHero(){
   if(next){
     var i=slotInfo(next);
     html='<p class="when">'+relTime(toMin(next.time)-m)+' · '+next.time+'</p>'+
-      '<p class="big">'+next.label+'</p>'+
-      '<p class="sub">'+i.dur+' · '+i.sub+'</p>'+
+      '<p class="big">'+esc(next.label)+'</p>'+
+      '<p class="sub">'+esc(i.dur)+' · '+esc(i.sub)+'</p>'+
       '<button class="btn" data-act="start" data-id="'+next.id+'">'+(next.routine?'Commencer maintenant':'Voir le plan de force')+'</button>';
   }else if(missed){
     html='<p class="when">Plus de créneau prévu aujourd\'hui</p><p class="big">Il reste une séance à rattraper</p>'+
-      '<p class="sub">'+missed.label+' de '+missed.time+'. Mieux vaut tard que jamais.</p>'+
+      '<p class="sub">'+esc(missed.label)+' de '+missed.time+'. Mieux vaut tard que jamais.</p>'+
       '<button class="btn" data-act="start" data-id="'+missed.id+'">Rattraper</button>';
   }else{
     html='<p class="when">Tout est fait</p><p class="big">Journée complète</p><p class="sub">Toutes tes séances du jour sont cochées. À demain.</p>';
@@ -526,9 +468,9 @@ function renderTimeline(){
     return '<li class="slot'+(done?' done':'')+(late?' late':'')+'">'+
       '<span class="node" aria-hidden="true"></span>'+
       '<div class="when">'+s.time+'</div>'+
-      '<div class="what"><strong>'+s.label+'</strong><span>'+sub+' · '+i.dur+'</span></div>'+
+      '<div class="what"><strong>'+esc(s.label)+'</strong><span>'+esc(sub)+' · '+esc(i.dur)+'</span></div>'+
       '<div class="acts"><button class="btn small'+((done||!s.routine)?' ghost':'')+'" data-act="start" data-id="'+s.id+'">'+btn+'</button>'+
-      '<button class="chk" role="checkbox" aria-checked="'+done+'" aria-label="Marquer fait : '+s.label+' à '+s.time+'" data-act="toggle" data-id="'+s.id+'"></button></div></li>';
+      '<button class="chk" role="checkbox" aria-checked="'+done+'" aria-label="Marquer fait : '+esc(s.label)+' à '+s.time+'" data-act="toggle" data-id="'+s.id+'"></button></div></li>';
   }).join("");
 }
 
@@ -560,12 +502,10 @@ function renderRoutines(){
   $("#rcards").innerHTML=Object.keys(ROUT).map(function(id){
     var r=ROUT[id];
     var li=r.steps.map(function(s){
-      var e=EX[s[0]];
-      return '<li>'+e.name+'<span>'+(s[2]?s[1]+' s par côté':s[1]+' s')+'</span></li>';
+      return '<li>'+esc(EX[s[0]].name)+'<span>'+(s[2]?s[1]+' s par côté':s[1]+' s')+'</span></li>';
     }).join("");
-    var when=id==="reveil"?"Au réveil":(id==="coucher"?"Avant de dormir":"Toutes les 2 heures");
-    return '<article class="rcard"><h3>'+r.label+'</h3><p class="meta">'+when+' · '+fmtMin(totalSec(id))+' · '+r.sub+'</p><ol>'+li+'</ol>'+
-      '<button class="btn" data-act="startRoutine" data-id="'+id+'">Lancer cette routine</button></article>';
+    return '<article class="rcard"><h3>'+esc(r.label)+'</h3><p class="meta">'+esc(r.when)+(r.when?' · ':'')+fmtMin(totalSec(id))+' · '+esc(r.sub)+'</p><ol>'+li+'</ol>'+
+      '<button class="btn" data-act="startRoutine" data-id="'+esc(id)+'">Lancer cette routine</button></article>';
   }).join("");
 }
 
@@ -573,14 +513,19 @@ function renderRoutines(){
 var phase=0;
 function exHTML(id,dose){
   var e=EX[id];
-  return '<details class="ex"><summary><span>'+e.name+(e.src?' ★':'')+'<br><span class="tags">'+e.tags.join(", ")+'</span></span>'+(dose?'<span class="dose">'+dose+'</span>':'')+'</summary>'+
-    '<div class="body"><p>'+e.how+'</p><em>'+e.tip+'</em></div></details>';
+  return '<details class="ex"><summary><span>'+esc(e.name)+(e.src?' ★':'')+'<br><span class="tags">'+esc(e.tags.join(", "))+'</span></span>'+(dose?'<span class="dose">'+esc(dose)+'</span>':'')+'</summary>'+
+    '<div class="body"><p>'+esc(e.how)+'</p>'+(e.tip?'<em>'+esc(e.tip)+'</em>':'')+'</div></details>';
+}
+function renderForceIntro(){
+  $("#force-title").textContent=FORCE.title||"";
+  $("#force-intro").textContent=FORCE.intro||"";
+  $("#force-rules").innerHTML=(FORCE.rules||[]).map(function(r){return '<tr><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td></tr>'}).join("");
 }
 function renderForce(){
   $("#phase-seg").innerHTML=PH.map(function(p,i){
-    return '<button class="chip" aria-pressed="'+(i===phase)+'" data-act="phase" data-i="'+i+'">'+p.n+' · '+p.w+'</button>';
+    return '<button class="chip" aria-pressed="'+(i===phase)+'" data-act="phase" data-i="'+i+'">'+esc(p.n)+(p.w?' · '+esc(p.w):'')+'</button>';
   }).join("");
-  var p=PH[phase];
+  var p=PH[phase]||{goal:"",items:[]};
   $("#phase-goal").textContent=p.goal;
   $("#phase-list").innerHTML=p.items.map(function(it){return exHTML(it[0],it[1])}).join("");
   var d=todayLog();
@@ -589,12 +534,22 @@ function renderForce(){
   $("#force-note").textContent=wkF+" séance"+(wkF>1?"s":"")+" sur 7 jours (objectif : 3)";
 }
 
+/* ---------- Rendu : conseils ---------- */
+function renderTips(){
+  var html=TIPS.map(function(t){
+    return '<div class="tip"><h3>'+esc(t.title)+'</h3><ul>'+(t.items||[]).map(function(x){return '<li>'+esc(x)+'</li>'}).join("")+'</ul></div>';
+  }).join("");
+  if(ALERT&&ALERT.text)html+='<div class="alert"><strong>'+esc(ALERT.title||"")+'</strong> '+esc(ALERT.text)+'</div>';
+  $("#tips").innerHTML=html;
+}
+
 /* ---------- Rendu : bibliothèque ---------- */
 var filter="Tous";
 function renderLibrary(){
-  var tags=["Tous","Cou","Épaules","Dos","Hanches","Fessier"];
+  var tags=["Tous"].concat(TAGS);
+  if(tags.indexOf(filter)<0)filter="Tous";
   $("#filters").innerHTML=tags.map(function(t){
-    return '<button class="chip" aria-pressed="'+(t===filter)+'" data-act="filter" data-t="'+t+'">'+t+'</button>';
+    return '<button class="chip" aria-pressed="'+(t===filter)+'" data-act="filter" data-t="'+esc(t)+'">'+esc(t)+'</button>';
   }).join("");
   $("#exlist").innerHTML=Object.keys(EX).filter(function(id){return filter==="Tous"||EX[id].tags.indexOf(filter)>-1}).map(function(id){return exHTML(id,"")}).join("");
 }
@@ -647,6 +602,7 @@ function beep(freq,dur){
 function wake(){try{if(navigator.wakeLock)navigator.wakeLock.request("screen").then(function(l){P.lock=l}).catch(function(){})}catch(e){}}
 function unwake(){try{if(P.lock){P.lock.release();P.lock=null}}catch(e){}}
 function startRoutine(rid,slotId){
+  if(!expand(rid).length)return;
   P.steps=expand(rid);P.i=0;P.slot=slotId||null;P.run=true;
   $("#player").hidden=false;document.body.style.overflow="hidden";
   $("#pl-body").classList.remove("pl-done");$("#pl-ctl").style.display="";
@@ -729,7 +685,20 @@ document.addEventListener("keydown",function(e){
 });
 
 /* ---------- Init ---------- */
-function renderAll(){renderHero();renderTimeline();renderWeek();renderForce();}
+function renderAll(){if(!CONTENT_OK)return;renderHero();renderTimeline();renderWeek();renderForce()}
+function renderContent(){renderRoutines();renderLibrary();renderTips();renderForceIntro();renderAll()}
+function loadCachedContent(){
+  try{var c=JSON.parse(lsGet(CONTENTK));if(c&&c.exercises){applyContent(c);return c}}catch(e){}
+  return null;
+}
+function fetchContent(cached){
+  return fetch("/content.json",{cache:"no-cache"}).then(function(r){if(!r.ok)throw new Error(String(r.status));return r.json()}).then(function(c){
+    var s=JSON.stringify(c);
+    if(!cached||s!==JSON.stringify(cached)){lsSet(CONTENTK,s);applyContent(c);renderContent()}
+  }).catch(function(){
+    if(!cached)$("#hero").innerHTML='<p class="big">Contenu indisponible</p><p class="sub">Impossible de charger content.json. Vérifie le serveur et le fichier, puis recharge la page.</p>';
+  });
+}
 function handleStart(){
   var p=new URLSearchParams(location.search).get("start");
   if(!p)return;
@@ -739,9 +708,12 @@ function handleStart(){
 (function init(){
   var dt=new Date();
   $("#today-date").textContent=dt.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"});
-  cacheLoad();bindSettings();fillSettings();renderRoutines();renderLibrary();renderAll();
-  if(token())sync().then(handleStart);else askToken();
-  document.addEventListener("visibilitychange",function(){if(!document.hidden&&token()&&$("#player").hidden)sync()});
+  cacheLoad();bindSettings();fillSettings();
+  var cached=loadCachedContent();
+  if(cached)renderContent();
+  var c=fetchContent(cached);
+  if(token())Promise.all([c,sync()]).then(handleStart);else{askToken();c.then(function(){})}
+  document.addEventListener("visibilitychange",function(){if(!document.hidden&&$("#player").hidden){fetchContent(loadCachedContent());if(token())sync()}});
   setInterval(function(){if($("#player").hidden){renderHero();renderTimeline()}},30000);
   setInterval(function(){if(!document.hidden&&token()&&$("#player").hidden)sync()},120000);
   if("serviceWorker" in navigator)navigator.serviceWorker.register("/sw.js").catch(function(){});
