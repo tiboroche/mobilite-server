@@ -1,10 +1,13 @@
 """Tests de bout en bout : lance le vrai serveur + un faux ntfy. `python3 test_server.py`"""
+import copy
 import http.client
 import json
 import os
+import shutil
 import tempfile
 import threading
 import unittest
+from pathlib import Path
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
@@ -27,8 +30,11 @@ fake = HTTPServer(("127.0.0.1", 0), FakeNtfy)
 threading.Thread(target=fake.serve_forever, daemon=True).start()
 
 TOKEN = "t" * 24
+TMP = Path(tempfile.mkdtemp())
+CONTENT_COPY = TMP / "content.json"
+shutil.copy(Path(__file__).parent / "content.json", CONTENT_COPY)
 os.environ.update({
-    "MOB_TOKEN": TOKEN, "MOB_DB": os.path.join(tempfile.mkdtemp(), "t.db"),
+    "MOB_TOKEN": TOKEN, "MOB_DB": str(TMP / "t.db"), "MOB_CONTENT": str(CONTENT_COPY),
     "NTFY_URL": f"http://127.0.0.1:{fake.server_port}", "NTFY_TOPIC": "test-topic",
     "PUBLIC_URL": "https://mob.example.org", "MOB_TZ": "Europe/Paris",
 })
@@ -162,6 +168,69 @@ class T(unittest.TestCase):
         self.assertEqual(call("GET", "/../server.py", token=None)[0], 404)
         self.assertEqual(call("GET", "/%2e%2e/server.py", token=None)[0], 404)
         self.assertEqual(call("GET", "/nope", token=None)[0], 404)
+
+    # ---- content.json
+    def write_content(self, data):
+        CONTENT_COPY.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+        st = CONTENT_COPY.stat()
+        os.utime(CONTENT_COPY, ns=(st.st_atime_ns, st.st_mtime_ns + 5_000_000_000))  # force un nouvel mtime
+
+    def tearDown(self):
+        self.write_content(self.original) if hasattr(self, "original") else None
+
+    def load_original(self):
+        self.original = json.loads((Path(__file__).parent / "content.json").read_text(encoding="utf-8"))
+        return copy.deepcopy(self.original)
+
+    def test_content_served_and_valid(self):
+        s, d = call("GET", "/content.json", token=None)
+        self.assertEqual(s, 200)
+        self.assertEqual(len(d["exercises"]), 30)
+        errs, warns = server.validate_content(d)
+        self.assertEqual((errs, warns), ([], []))
+
+    def test_content_validation_catches_mistakes(self):
+        c = self.load_original()
+        c["routines"]["pause"]["steps"].append({"ex": "exo_qui_nexiste_pas", "sec": 30})
+        c["routines"]["reveil"]["steps"][0]["sec"] = "45"
+        c["exercises"]["Mauvais Id"] = {"name": "x", "how": "y", "tags": ["Cou"]}
+        c["exercises"]["clam"]["tags"] = ["Inconnu"]
+        del c["routines"]["coucher"]
+        c["force"]["phases"][0]["items"][0]["ex"] = "nope"
+        c["tips"].append({"title": "Sans items"})
+        errs, warns = server.validate_content(c)
+        joined = "\n".join(errs)
+        for needle in ("exo_qui_nexiste_pas", '"sec"', "Mauvais Id", "coucher", "phase 1", "conseil 7"):
+            self.assertIn(needle, joined)
+        self.assertTrue(any("Inconnu" in w for w in warns))
+
+    def test_content_durations_warning(self):
+        c = self.load_original()
+        c["routines"]["pause"]["steps"][0]["sec"] = 200
+        _, warns = server.validate_content(c)
+        self.assertTrue(any("routine « pause » : dure" in w for w in warns))
+
+    def test_notification_text_comes_from_content(self):
+        c = self.load_original()
+        c["notifications"]["pause"] = {"title": "Debout !", "body": "Texte perso"}
+        c["notifications"]["relance"] = {"prefix": "Hé ! ", "body": "Relance perso"}
+        self.write_content(c)
+        server.tick(at(2026, 10, 19, 10, 0))
+        self.assertEqual((RECEIVED[-1]["title"], RECEIVED[-1]["message"]), ("Debout ! · 10:00", "Texte perso"))
+        server.tick(at(2026, 10, 19, 10, 15))
+        self.assertEqual((RECEIVED[-1]["title"], RECEIVED[-1]["message"]), ("Hé ! Debout ! · 10:00", "Relance perso"))
+
+    def test_broken_content_keeps_last_good_version(self):
+        c = self.load_original()
+        c["notifications"]["reveil"] = {"title": "Version valide", "body": "ok"}
+        self.write_content(c)
+        self.assertEqual(server.notif_text("reveil")[0], "Version valide")
+        CONTENT_COPY.write_text("{ pas du json", encoding="utf-8")
+        st = CONTENT_COPY.stat()
+        os.utime(CONTENT_COPY, ns=(st.st_atime_ns, st.st_mtime_ns + 9_000_000_000))
+        self.assertEqual(server.notif_text("reveil")[0], "Version valide")   # notifications : dernière version valide
+        self.assertEqual(call("GET", "/content.json", token=None)[0], 500)   # la page est prévenue
+        self.assertEqual(server.check_cli(), 1)
 
     def test_rate_limit(self):
         for _ in range(10):

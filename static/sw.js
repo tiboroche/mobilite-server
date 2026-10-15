@@ -1,6 +1,6 @@
 // Service worker minimal : la page reste ouvrable hors ligne ; l'API n'est jamais mise en cache.
-const CACHE = "mobilite-shell-v1";
-const SHELL = ["/", "/manifest.webmanifest", "/icon-192.png"];
+const CACHE = "mobilite-shell-v2";
+const SHELL = ["/", "/manifest.webmanifest", "/icon-192.png", "/content.json"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
