@@ -34,6 +34,7 @@ python3 server.py            # lit les variables de .env si tu les exportes (voi
 docker compose up -d --build
 docker compose logs -f
 ```
+Pour les mises à jour : `./deploy.sh` (git pull, reconstruction, redémarrage, vérification de `/api/health`).
 
 **systemd (sans Docker)**
 ```bash
