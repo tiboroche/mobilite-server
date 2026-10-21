@@ -4,11 +4,11 @@
   "tags": ["Cou", "Épaules", "Dos", "Hanches", "Fessier"],
   "exercises": {
     "marche_respi": {
-      "name": "Se lever et respirer",
-      "tags": ["Dos"],
+      "name": "Marcher une minute",
+      "tags": ["Dos", "Hanches"],
       "from_notes": false,
-      "how": "Lève-toi, grandis-toi, marche quelques pas. Trois grandes respirations ventrales : le ventre se gonfle à l'inspiration.",
-      "tip": "Le but est de casser la position assise avant de commencer les étirements."
+      "how": "Quitte ton poste et marche une minute : couloir, escalier, aller chercher de l'eau. Pas souples, bras relâchés, trois grandes respirations ventrales en chemin.",
+      "tip": "La marche remet les fessiers et les hanches en route après les étirements. Pas la place ? Marche sur place en montant les genoux."
     },
     "cou_mob": {
       "name": "Mobilité du cou",
@@ -260,15 +260,16 @@
     "pause": {
       "label": "Pause du bureau",
       "when": "Toutes les 2 heures",
-      "sub": "Debout à ton bureau, assis pour finir",
+      "sub": "Assis, puis debout, puis une minute de marche",
       "steps": [
-        {"ex": "chin_tuck", "sec": 30},
-        {"ex": "pectoral_porte", "sec": 40},
+        {"ex": "chin_tuck", "sec": 25},
         {"ex": "etir_elev", "sec": 15, "bi": true},
-        {"ex": "cercles_hanche", "sec": 25, "bi": true},
-        {"ex": "psoas_debout", "sec": 25, "bi": true},
+        {"ex": "fessier_assis", "sec": 20, "bi": true},
+        {"ex": "pectoral_porte", "sec": 15, "bi": true},
+        {"ex": "cercles_hanche", "sec": 20, "bi": true},
+        {"ex": "psoas_debout", "sec": 20, "bi": true},
         {"ex": "fessier_debout", "sec": 20, "bi": true},
-        {"ex": "fessier_assis", "sec": 30, "bi": true}
+        {"ex": "marche_respi", "sec": 60}
       ]
     },
     "coucher": {
@@ -387,7 +388,7 @@
     },
     "pause": {
       "title": "Pause mouvement",
-      "body": "Lève-toi 5 minutes : nuque, pectoral, cercles de hanche, psoas, fessiers."
+      "body": "5 minutes : nuque et fessiers assis, pectoral et hanches debout, puis une minute de marche."
     },
     "force": {
       "title": "Séance de force",

@@ -70,7 +70,7 @@ SLOT_RE = re.compile(r"^(reveil|coucher|force|[pd]([01]\d|2[0-3]):[0-5]\d)$")
 
 DEFAULT_MESSAGES = {
     "reveil": ("Routine du réveil", "5 minutes : cou et dos, puis hanches et fessiers."),
-    "pause": ("Pause mouvement", "Lève-toi 5 minutes : nuque, pectoral, cercles de hanche, psoas, fessiers."),
+    "pause": ("Pause mouvement", "5 minutes : nuque et fessiers assis, pectoral et hanches debout, puis une minute de marche."),
     "debout": ("Bureau debout", "Monte le bureau et travaille debout jusqu'à la prochaine pause. Genoux souples, change d'appui."),
     "force": ("Séance de force", "20 minutes : moyen fessier et haut du dos."),
     "coucher": ("Routine du coucher", "5 minutes pour relâcher le cou, les fessiers et les hanches."),
