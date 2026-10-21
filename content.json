@@ -80,6 +80,13 @@
       "how": "Debout, un grand pas en arrière, talon du pied arrière levé. Rentre le coccyx, serre la fesse arrière et avance légèrement le bassin.",
       "tip": "Version bureau de la fente. Une main sur le mur ou sur la chaise pour l'équilibre."
     },
+    "cercles_hanche": {
+      "name": "Cercles de hanche debout",
+      "tags": ["Hanches", "Fessier"],
+      "from_notes": false,
+      "how": "Debout, une main sur le mur ou le bureau. Monte le genou devant toi, ouvre-le sur le côté, puis ramène la jambe vers l'arrière et redescends : un grand cercle lent. 3 cercles dans un sens, 3 dans l'autre.",
+      "tip": "Le bassin et le buste restent immobiles : seule la hanche tourne. Cherche l'amplitude la plus grande possible sans compenser avec le dos."
+    },
     "thomas": {
       "name": "Psoas au bord du lit",
       "tags": ["Hanches"],
@@ -93,6 +100,13 @@
       "from_notes": true,
       "how": "Debout, une main sur le mur ou la chaise. Lève la jambe sur le côté, pied et bassin de face. Tiens 1 seconde en haut, redescends lentement.",
       "tip": "Ne penche pas le buste de l'autre côté. Pense à pousser le talon vers l'extérieur plutôt qu'à monter haut."
+    },
+    "fessier_assis": {
+      "name": "Étirement fessier assis",
+      "tags": ["Fessier", "Hanches"],
+      "from_notes": false,
+      "how": "Assis au bord de la chaise, pose la cheville droite sur le genou gauche. Dos long, penche le buste vers l'avant depuis les hanches jusqu'à sentir le fessier droit s'étirer.",
+      "tip": "Version bureau de l'étirement jambes croisées. Appuie doucement sur le genou levé pour accentuer, sans arrondir le dos."
     },
     "enfant": {
       "name": "Posture de l'enfant",
@@ -114,6 +128,20 @@
       "from_notes": true,
       "how": "Assis au sol, jambe avant pliée à 90° devant toi, jambe arrière pliée sur le côté. Redresse le dos, puis penche le buste vers la jambe avant en gardant le dos long.",
       "tip": "Étirement du fessier côté jambe avant. Mets un coussin sous le fessier si le bassin bascule."
+    },
+    "essuie_glace": {
+      "name": "Essuie-glaces des hanches",
+      "tags": ["Hanches"],
+      "from_notes": false,
+      "how": "Allongé sur le dos, genoux pliés, pieds à plat et plus écartés que le bassin. Laisse tomber les deux genoux d'un côté, puis de l'autre, lentement.",
+      "tip": "Les épaules restent au sol. Le mouvement fait tourner les hanches vers l'intérieur et l'extérieur : reste dans une amplitude confortable."
+    },
+    "papillon": {
+      "name": "Papillon (adducteurs)",
+      "tags": ["Hanches"],
+      "from_notes": false,
+      "how": "Assis, plantes des pieds jointes, genoux qui s'ouvrent vers l'extérieur. Tiens tes chevilles, grandis-toi puis penche doucement le buste vers l'avant.",
+      "tip": "Laisse les genoux descendre par leur poids, ne pousse pas dessus. Dos contre le mur ou coussin sous les fesses si le bas du dos s'arrondit."
     },
     "respi_46": {
       "name": "Respiration 4-6 allongée",
@@ -218,28 +246,29 @@
     "reveil": {
       "label": "Réveil",
       "when": "Au réveil",
-      "sub": "Au bord du lit, puis au sol",
+      "sub": "Au bord du lit, au sol, puis debout",
       "steps": [
-        {"ex": "cou_mob", "sec": 45},
-        {"ex": "cercles_epaules", "sec": 30},
-        {"ex": "etir_elev", "sec": 25, "bi": true},
-        {"ex": "chat_vache", "sec": 45},
-        {"ex": "livre_ouvert", "sec": 30, "bi": true},
-        {"ex": "psoas_fente", "sec": 35, "bi": true}
+        {"ex": "cou_mob", "sec": 40},
+        {"ex": "chat_vache", "sec": 30},
+        {"ex": "livre_ouvert", "sec": 15, "bi": true},
+        {"ex": "essuie_glace", "sec": 40},
+        {"ex": "rot_genou_leve", "sec": 25, "bi": true},
+        {"ex": "psoas_fente", "sec": 30, "bi": true},
+        {"ex": "cercles_hanche", "sec": 25, "bi": true}
       ]
     },
     "pause": {
       "label": "Pause du bureau",
       "when": "Toutes les 2 heures",
-      "sub": "Debout, à côté de ta chaise",
+      "sub": "Debout à ton bureau, assis pour finir",
       "steps": [
-        {"ex": "marche_respi", "sec": 30},
         {"ex": "chin_tuck", "sec": 30},
-        {"ex": "haussements", "sec": 25},
-        {"ex": "pectoral_porte", "sec": 45},
-        {"ex": "etir_elev", "sec": 25, "bi": true},
-        {"ex": "psoas_debout", "sec": 30, "bi": true},
-        {"ex": "fessier_debout", "sec": 30, "bi": true}
+        {"ex": "pectoral_porte", "sec": 40},
+        {"ex": "etir_elev", "sec": 15, "bi": true},
+        {"ex": "cercles_hanche", "sec": 25, "bi": true},
+        {"ex": "psoas_debout", "sec": 25, "bi": true},
+        {"ex": "fessier_debout", "sec": 20, "bi": true},
+        {"ex": "fessier_assis", "sec": 30, "bi": true}
       ]
     },
     "coucher": {
@@ -247,11 +276,13 @@
       "when": "Avant de dormir",
       "sub": "Bord du lit puis allongé",
       "steps": [
-        {"ex": "cou_mob", "sec": 50},
-        {"ex": "enfant", "sec": 45},
-        {"ex": "genoux_croises", "sec": 35, "bi": true},
-        {"ex": "thomas", "sec": 30, "bi": true},
-        {"ex": "respi_46", "sec": 75}
+        {"ex": "cou_mob", "sec": 40},
+        {"ex": "enfant", "sec": 40},
+        {"ex": "genoux_croises", "sec": 30, "bi": true},
+        {"ex": "papillon", "sec": 40},
+        {"ex": "essuie_glace", "sec": 30},
+        {"ex": "thomas", "sec": 25, "bi": true},
+        {"ex": "respi_46", "sec": 40}
       ]
     }
   },
@@ -311,10 +342,18 @@
       }
     ]
   },
+  "debout": {
+    "label": "Bureau debout",
+    "sub": "Monte le bureau jusqu'à la prochaine pause"
+  },
   "tips": [
     {
       "title": "Au bureau",
-      "items": ["Écran : le haut au niveau des yeux, à un bras de distance. Le menton ne doit ni avancer ni plonger.", "Coudes à 90° près du corps, épaules basses. Pieds à plat, bassin légèrement plus haut que les genoux si possible.", "Alterne assis et debout si tu as un bureau réglable. Sinon, téléphone ou visio debout, et marche pendant les appels.", "Entre deux pauses de 5 minutes : change de position toutes les 30 à 45 minutes (1 minute suffit : te lever, aller chercher de l'eau)."]
+      "items": ["Écran : le haut au niveau des yeux, à un bras de distance. Le menton ne doit ni avancer ni plonger.", "Coudes à 90° près du corps, épaules basses. Pieds à plat, bassin légèrement plus haut que les genoux si possible.", "Alterne assis et debout (voir « Bureau debout »). Téléphone ou visio debout, et marche pendant les appels.", "Entre deux pauses de 5 minutes : change de position toutes les 30 à 45 minutes (1 minute suffit : te lever, aller chercher de l'eau)."]
+    },
+    {
+      "title": "Bureau debout",
+      "items": ["Alterne plutôt que de rester debout toute la journée : l'app te rappelle de monter le bureau à mi-chemin entre deux pauses, et la pause suivante est le bon moment pour te rasseoir.", "Hauteur : coudes à 90°, avant-bras posés, épaules basses. Remonte l'écran pour garder le haut au niveau des yeux.", "Poids réparti sur les deux pieds, genoux déverrouillés. Change d'appui souvent ; poser un pied sur une petite marche, en alternant, soulage le bas du dos et le psoas.", "Évite de te poser sur une hanche ou de cambrer. Chaussures confortables ou tapis anti-fatigue si tu restes debout plus d'une heure.", "Profite d'être debout pour glisser quelques cercles de hanche ou un étirement du psoas entre deux tâches."]
     },
     {
       "title": "Marcher, tout simplement",
@@ -344,15 +383,19 @@
   "notifications": {
     "reveil": {
       "title": "Routine du réveil",
-      "body": "5 minutes au bord du lit : cou, épaules, dos, psoas."
+      "body": "5 minutes : cou et dos, puis hanches et fessiers."
     },
     "pause": {
       "title": "Pause mouvement",
-      "body": "Lève-toi 5 minutes : menton rentré, pectoral, hanches, moyen fessier."
+      "body": "Lève-toi 5 minutes : nuque, pectoral, cercles de hanche, psoas, fessiers."
     },
     "force": {
       "title": "Séance de force",
       "body": "20 minutes : moyen fessier et haut du dos."
+    },
+    "debout": {
+      "title": "Bureau debout",
+      "body": "Monte le bureau et travaille debout jusqu'à la prochaine pause. Genoux souples, change d'appui."
     },
     "coucher": {
       "title": "Routine du coucher",

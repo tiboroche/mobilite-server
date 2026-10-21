@@ -9,7 +9,8 @@ téléphone ──HTTPS──▶ reverse proxy ──▶ server.py (page + API +
     └────────── notification ◀── ntfy ◀──────┘
 ```
 
-Ce que ça fait : réveil, pauses toutes les 2 h les jours travaillés, séances de force et coucher
+Ce que ça fait : réveil, pauses toutes les 2 h les jours travaillés (avec un rappel « bureau debout »
+à mi-chemin entre deux pauses), séances de force et coucher
 sont notifiés à l'heure prévue, avec une relance si tu n'as rien coché. Le bouton **Fait** de la
 notification coche la séance sans ouvrir l'app. L'état est partagé entre tes appareils.
 
@@ -61,6 +62,8 @@ Si le test échoue, regarde les logs du service : le message d'erreur de ntfy y 
 - Un rappel part à l'heure exacte, s'il n'est pas déjà coché, **dans les 10 minutes** suivant l'heure prévue.
   Si le serveur était éteint, il ne rattrape pas les anciens créneaux (pas de rafale de notifications).
 - Une seule relance par séance, après le délai choisi (10, 15 ou 30 min, ou aucune).
+- Bureau debout : un rappel à mi-chemin entre deux pauses (ex. 11:00, 13:00… avec des pauses toutes les 2 h),
+  jusqu'à la pause suivante. Désactivable dans les réglages ; ces créneaux ne comptent pas dans les séances de mobilité.
 - Jours de pause au bureau, jours de force, heures et rappels on/off se règlent dans l'app.
 
 ## Modifier le contenu (exercices, routines, conseils)
@@ -82,8 +85,9 @@ et le serveur affiche l'erreur dans ses logs.
 | `exercises` | La bibliothèque. Clé = identifiant stable (`a-z`, `0-9`, `_`), valeur = `name`, `tags`, `how` (la consigne affichée aussi dans le minuteur), `tip` (astuce, facultative), `from_notes` (`true` = étoile ★). |
 | `routines` | `reveil`, `pause`, `coucher` (obligatoires). Chaque étape : `{"ex": "id", "sec": 30}` ; ajoute `"bi": true` pour un exercice fait des deux côtés (`sec` est alors **par côté**, la durée est doublée). |
 | `force` | Textes de l'onglet, `rules` (tableau Rythme, Début…), et `phases` avec leurs exercices : `{"ex": "clam", "dose": "3 × 12 / côté"}`. `minutes` et `sub` servent à la frise et au héros. |
+| `debout` | `label` et `sub` des créneaux « bureau debout » dans la frise et le héros (facultatif). |
 | `tips` | Les conseils : une liste de `{"title": "...", "items": ["...", "..."]}`, plus `alert` pour l'encadré en bas. |
-| `notifications` | Titre et texte de chaque rappel (`reveil`, `pause`, `force`, `coucher`) et de la relance. |
+| `notifications` | Titre et texte de chaque rappel (`reveil`, `pause`, `debout`, `force`, `coucher`) et de la relance. |
 
 **Ajouter un exercice à la pause du bureau**
 ```json
@@ -122,11 +126,11 @@ Toutes les routes sauf `/api/health` et `/api/quick` demandent `Authorization: B
 | POST | `/api/test-notify` | envoyer une notification test |
 | POST | `/api/quick?day&slot&sig` | lien signé des notifications |
 
-Créneaux : `reveil`, `coucher`, `force`, `pHH:MM` (ex. `p14:00`).
+Créneaux : `reveil`, `coucher`, `force`, `pHH:MM` (pause, ex. `p14:00`), `dHH:MM` (bureau debout, ex. `d15:00`).
 
 ## Tests
 ```bash
-python3 test_server.py     # lance le serveur et un faux ntfy, 17 tests (dont la validation de content.json)
+python3 test_server.py     # lance le serveur et un faux ntfy, 18 tests (dont la validation de content.json)
 ```
 
 ## Pistes d'évolution

@@ -219,6 +219,7 @@ details.ex .body em{color:var(--muted);font-style:normal;font-size:14px}
         <label>Coucher<input type="time" id="c-bed"></label>
         <label>Séance de force<input type="time" id="c-force"></label>
         <label>Rappels<select id="c-notify"><option value="1">Activés</option><option value="0">Désactivés</option></select></label>
+        <label>Bureau debout<select id="c-stand"><option value="1">Rappel entre les pauses</option><option value="0">Désactivé</option></select></label>
         <label>Relance si non fait<select id="c-relance"><option value="0">Aucune</option><option value="10">Après 10 min</option><option value="15">Après 15 min</option><option value="30">Après 30 min</option></select></label>
       </div>
       <div class="grp"><span class="lab">Jours de pause au bureau</span><div class="daysrow" id="d-workdays"></div></div>
@@ -298,7 +299,7 @@ details.ex .body em{color:var(--muted);font-style:normal;font-size:14px}
 <script>
 /* ---------- Contenu (chargé depuis content.json) ---------- */
 // Exercices, routines, plan de force, conseils : tout vient de content.json. Ne modifie pas ce code pour changer le contenu.
-var EX={},ROUT={},PH=[],FORCE={},TIPS=[],TAGS=[],ALERT={},CONTENT_OK=false,CONTENTK="mobilite_content_v1";
+var EX={},ROUT={},PH=[],FORCE={},DEBOUT={},TIPS=[],TAGS=[],ALERT={},CONTENT_OK=false,CONTENTK="mobilite_content_v1";
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function applyContent(c){
   var ex=c.exercises||{},ok={};
@@ -321,7 +322,7 @@ function applyContent(c){
       return true;
     }).map(function(i){return [i.ex,i.dose||""]})};
   });
-  EX=ok;ROUT=rt;FORCE=f;TIPS=c.tips||[];TAGS=c.tags||[];ALERT=c.alert||{};
+  EX=ok;ROUT=rt;FORCE=f;DEBOUT=c.debout||{};TIPS=c.tips||[];TAGS=c.tags||[];ALERT=c.alert||{};
   if(phase>=PH.length)phase=0;
   CONTENT_OK=true;
 }
@@ -347,7 +348,7 @@ function fromMin(m){return pad(Math.floor(m/60))+":"+pad(m%60)}
 function nowMin(){var n=new Date();return n.getHours()*60+n.getMinutes()}
 
 /* ---------- État et synchronisation ---------- */
-var DEF={wake:"07:30",start:"10:00",end:"18:00",every:2,bed:"22:30",workdays:[0,1,2,3,4],force_days:[0,2,5],force_time:"18:30",notify:true,relance:15};
+var DEF={wake:"07:30",start:"10:00",end:"18:00",every:2,bed:"22:30",workdays:[0,1,2,3,4],force_days:[0,2,5],force_time:"18:30",notify:true,relance:15,stand:true};
 var CACHE="mobilite_cache_v2",TOK="mobilite_token",PENDK="mobilite_pending";
 var S={cfg:Object.assign({},DEF),log:{}},META={notify_enabled:false},PEND=[];
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
@@ -412,7 +413,10 @@ function slotsFor(dt){
   var out=[{id:"reveil",time:c.wake,label:rlabel("reveil","Réveil"),routine:"reveil"}];
   if(c.workdays.indexOf(dow)>-1){
     var m=toMin(c.start),e=toMin(c.end),step=Math.max(1,+c.every)*60;
-    for(;m<=e;m+=step)out.push({id:"p"+fromMin(m),time:fromMin(m),label:rlabel("pause","Pause du bureau"),routine:"pause"});
+    for(;m<=e;m+=step){
+      out.push({id:"p"+fromMin(m),time:fromMin(m),label:rlabel("pause","Pause du bureau"),routine:"pause"});
+      if(c.stand&&m+step/2<=e)out.push({id:"d"+fromMin(m+step/2),time:fromMin(m+step/2),label:(DEBOUT.label||"Bureau debout"),routine:null,stand:step/2});
+    }
   }
   if(c.force_days.indexOf(dow)>-1)out.push({id:"force",time:c.force_time,label:(FORCE.label||"Séance de force"),routine:null});
   out.push({id:"coucher",time:c.bed,label:rlabel("coucher","Coucher"),routine:"coucher"});
@@ -420,6 +424,7 @@ function slotsFor(dt){
   return out;
 }
 function slots(){return slotsFor(new Date())}
+function isStand(id){return id.charAt(0)==="d"}
 function slotById(id){return slots().filter(function(s){return s.id===id})[0]}
 
 /* ---------- Rendu : héros ---------- */
@@ -431,23 +436,26 @@ function relTime(diff){
 }
 function slotInfo(s){
   if(s.routine){var r=ROUT[s.routine]||{sub:""};return {sub:r.sub,dur:fmtMin(totalSec(s.routine))}}
+  if(s.stand)return {sub:DEBOUT.sub||"",dur:s.stand+" min"};
   return {sub:FORCE.sub||"",dur:(FORCE.minutes||20)+" min"};
 }
 function launch(s){
   if(s.routine)startRoutine(s.routine,s.id);
+  else if(s.stand){showTab("today");window.scrollTo(0,0)}
   else{showTab("force");window.scrollTo(0,0)}
 }
 function renderHero(){
   var d=todayLog(),m=nowMin(),all=slots();
   var next=all.filter(function(s){return !d[s.id]&&toMin(s.time)>=m-20})[0];
-  var missed=all.filter(function(s){return !d[s.id]})[0];
+  var missed=all.filter(function(s){return !d[s.id]&&!s.stand})[0];
   var h=$("#hero"),html="";
   if(next){
     var i=slotInfo(next);
     html='<p class="when">'+relTime(toMin(next.time)-m)+' · '+next.time+'</p>'+
       '<p class="big">'+esc(next.label)+'</p>'+
       '<p class="sub">'+esc(i.dur)+' · '+esc(i.sub)+'</p>'+
-      '<button class="btn" data-act="start" data-id="'+next.id+'">'+(next.routine?'Commencer maintenant':'Voir le plan de force')+'</button>';
+      (next.stand?'<button class="btn" data-act="toggle" data-id="'+next.id+'">Je suis debout</button>':
+      '<button class="btn" data-act="start" data-id="'+next.id+'">'+(next.routine?'Commencer maintenant':'Voir le plan de force')+'</button>');
   }else if(missed){
     html='<p class="when">Plus de créneau prévu aujourd\'hui</p><p class="big">Il reste une séance à rattraper</p>'+
       '<p class="sub">'+esc(missed.label)+' de '+missed.time+'. Mieux vaut tard que jamais.</p>'+
@@ -462,27 +470,29 @@ function renderHero(){
 function renderTimeline(){
   var d=todayLog(),m=nowMin();
   $("#timeline").innerHTML=slots().map(function(s){
-    var done=!!d[s.id],late=!done&&toMin(s.time)<m-20,i=slotInfo(s);
+    var done=!!d[s.id],late=!done&&!s.stand&&toMin(s.time)<m-20,i=slotInfo(s);
     var sub=done?"Fait":(late?"À rattraper":i.sub);
     var btn=s.routine?(done?"Refaire":"Lancer"):"Plan";
     return '<li class="slot'+(done?' done':'')+(late?' late':'')+'">'+
       '<span class="node" aria-hidden="true"></span>'+
       '<div class="when">'+s.time+'</div>'+
       '<div class="what"><strong>'+esc(s.label)+'</strong><span>'+esc(sub)+' · '+esc(i.dur)+'</span></div>'+
-      '<div class="acts"><button class="btn small'+((done||!s.routine)?' ghost':'')+'" data-act="start" data-id="'+s.id+'">'+btn+'</button>'+
+      '<div class="acts">'+(s.stand?'':'<button class="btn small'+((done||!s.routine)?' ghost':'')+'" data-act="start" data-id="'+s.id+'">'+btn+'</button>')+
       '<button class="chk" role="checkbox" aria-checked="'+done+'" aria-label="Marquer fait : '+esc(s.label)+' à '+s.time+'" data-act="toggle" data-id="'+s.id+'"></button></div></li>';
   }).join("");
 }
 
 /* ---------- Rendu : semaine ---------- */
-function doneCount(log){return Object.keys(log||{}).filter(function(k){return k!=="force"&&log[k]}).length}
-function mobTotal(dt){return slotsFor(dt).filter(function(s){return s.id!=="force"}).length}
+function isMob(id){return id!=="force"&&!isStand(id)}
+function doneCount(log){return Object.keys(log||{}).filter(function(k){return isMob(k)&&log[k]}).length}
+function mobTotal(dt){return slotsFor(dt).filter(function(s){return isMob(s.id)}).length}
 function renderWeek(){
-  var wk=$("#week"),mob=0,frc=0,names=["D","L","M","M","J","V","S"],cells=[];
+  var wk=$("#week"),mob=0,frc=0,std=0,names=["D","L","M","M","J","V","S"],cells=[];
   for(var i=6;i>=0;i--){
     var dt=new Date();dt.setDate(dt.getDate()-i);
     var lg=S.log[dayKey(dt)]||{},n=doneCount(lg),tot=mobTotal(dt);
     mob+=n;if(lg.force)frc++;
+    std+=Object.keys(lg).filter(function(k){return isStand(k)&&lg[k]}).length;
     cells.push({d:names[dt.getDay()],pct:Math.min(1,n/tot),force:!!lg.force,today:i===0});
   }
   wk.innerHTML=cells.map(function(c){
@@ -494,7 +504,7 @@ function renderWeek(){
     var ok=doneCount(S.log[dayKey(d2)])>=Math.ceil(mobTotal(d2)/2);
     if(ok)streak++;else if(j===0)continue;else break;
   }
-  $("#stats").innerHTML='<span><b>'+mob+'</b> séances de mobilité sur 7 jours</span><span><b>'+frc+'</b> séance'+(frc>1?'s':'')+' de force</span><span>Série : <b>'+streak+'</b> jour'+(streak>1?'s':'')+'</span>';
+  $("#stats").innerHTML='<span><b>'+mob+'</b> séances de mobilité sur 7 jours</span><span><b>'+frc+'</b> séance'+(frc>1?'s':'')+' de force</span>'+(std?'<span><b>'+std+'</b> passage'+(std>1?'s':'')+' au bureau debout</span>':'')+'<span>Série : <b>'+streak+'</b> jour'+(streak>1?'s':'')+'</span>';
 }
 
 /* ---------- Rendu : routines ---------- */
@@ -561,12 +571,13 @@ function showTab(name){
 }
 
 /* ---------- Réglages ---------- */
-var FIELDS={"c-wake":"wake","c-start":"start","c-end":"end","c-bed":"bed","c-force":"force_time","c-every":"every","c-relance":"relance","c-notify":"notify"};
+var FIELDS={"c-wake":"wake","c-start":"start","c-end":"end","c-bed":"bed","c-force":"force_time","c-every":"every","c-relance":"relance","c-notify":"notify","c-stand":"stand"};
+var BOOL={notify:true,stand:true};
 var DAYN=["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
 function fillSettings(){
   Object.keys(FIELDS).forEach(function(id){
     var el=document.getElementById(id),k=FIELDS[id],v=S.cfg[k];
-    el.value=(k==="notify")?(v?"1":"0"):String(v);
+    el.value=BOOL[k]?(v?"1":"0"):String(v);
   });
   ["workdays","force_days"].forEach(function(k){
     $("#d-"+k).innerHTML=DAYN.map(function(n,i){
@@ -580,7 +591,7 @@ function bindSettings(){
     var el=document.getElementById(id),k=FIELDS[id];
     el.addEventListener("change",function(){
       if(!el.value)return;
-      S.cfg[k]=k==="notify"?el.value==="1":(k==="every"||k==="relance")?+el.value:el.value;
+      S.cfg[k]=BOOL[k]?el.value==="1":(k==="every"||k==="relance")?+el.value:el.value;
       saveCfg();fillSettings();renderAll();
     });
   });

@@ -111,8 +111,9 @@ class T(unittest.TestCase):
         s, c = call("PUT", "/api/cfg", {"every": 3, "wake": "06:45", "relance": 30, "notify": False,
                                         "workdays": [0, 1, 2], "force_days": [6]})
         self.assertEqual((s, c["every"], c["wake"], c["relance"], c["notify"]), (200, 3, "06:45", 30, False))
-        s, c = call("PUT", "/api/cfg", {"every": 5, "wake": "25:00", "workdays": [9], "bogus": 1, "notify": "x"})
-        self.assertEqual((c["every"], c["wake"], c["workdays"]), (3, "06:45", [0, 1, 2]))
+        s, c = call("PUT", "/api/cfg", {"every": 5, "wake": "25:00", "workdays": [9], "bogus": 1, "notify": "x",
+                                        "stand": "non"})
+        self.assertEqual((c["every"], c["wake"], c["workdays"], c["stand"]), (3, "06:45", [0, 1, 2], True))
         self.assertNotIn("bogus", c)
 
     def test_quick_link(self):
@@ -147,6 +148,21 @@ class T(unittest.TestCase):
         self.assertIn("Séance de force", RECEIVED[-1]["title"])
         self.assertEqual(server.tick(at(2026, 10, 18, 7, 30)), 1)  # réveil tous les jours
         self.assertEqual(server.tick(at(2026, 10, 19, 22, 30)), 1)  # coucher
+
+    def test_standing_slots(self):
+        monday = server.date(2026, 10, 19)
+        ids = [s["id"] for s in server.slots_for(monday, server.get_cfg())]
+        self.assertEqual([i for i in ids if i[0] in "pd"],
+                         ["p10:00", "d11:00", "p12:00", "d13:00", "p14:00", "d15:00", "p16:00", "d17:00", "p18:00"])
+        self.assertEqual(server.tick(at(2026, 10, 19, 11, 0)), 1)
+        self.assertIn("Bureau debout · 11:00", RECEIVED[-1]["title"])
+        self.assertIn("slot=d11:00", [a for a in RECEIVED[-1]["actions"] if a["action"] == "http"][0]["url"])
+        today = datetime.now(server.TZ).date().isoformat()
+        self.assertEqual(call("POST", "/api/log", {"day": today, "slot": "d11:00", "done": True})[0], 200)
+        self.assertEqual(server.tick(at(2026, 10, 17, 11, 0)), 0)  # samedi : pas de bureau
+        call("PUT", "/api/cfg", {"stand": False, "every": 1})
+        self.assertEqual(server.tick(at(2026, 10, 19, 13, 30)), 0)
+        self.assertNotIn("d10:30", [s["id"] for s in server.slots_for(monday, server.get_cfg())])
 
     def test_server_down_does_not_spam(self):
         self.assertEqual(server.tick(at(2026, 10, 19, 14, 30)), 0)  # 14:00 raté de 30 min, pas de rattrapage
@@ -185,7 +201,7 @@ class T(unittest.TestCase):
     def test_content_served_and_valid(self):
         s, d = call("GET", "/content.json", token=None)
         self.assertEqual(s, 200)
-        self.assertEqual(len(d["exercises"]), 30)
+        self.assertEqual(len(d["exercises"]), 34)
         errs, warns = server.validate_content(d)
         self.assertEqual((errs, warns), ([], []))
 
@@ -200,7 +216,7 @@ class T(unittest.TestCase):
         c["tips"].append({"title": "Sans items"})
         errs, warns = server.validate_content(c)
         joined = "\n".join(errs)
-        for needle in ("exo_qui_nexiste_pas", '"sec"', "Mauvais Id", "coucher", "phase 1", "conseil 7"):
+        for needle in ("exo_qui_nexiste_pas", '"sec"', "Mauvais Id", "coucher", "phase 1", "conseil 8"):
             self.assertIn(needle, joined)
         self.assertTrue(any("Inconnu" in w for w in warns))
 

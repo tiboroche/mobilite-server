@@ -63,13 +63,15 @@ DEFAULT_CFG = {
     "force_time": "18:30",
     "notify": True,
     "relance": 15,  # minutes ; 0 = pas de relance
+    "stand": True,  # rappel « bureau debout » entre deux pauses
 }
 TIME_RE = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
-SLOT_RE = re.compile(r"^(reveil|coucher|force|p([01]\d|2[0-3]):[0-5]\d)$")
+SLOT_RE = re.compile(r"^(reveil|coucher|force|[pd]([01]\d|2[0-3]):[0-5]\d)$")
 
 DEFAULT_MESSAGES = {
-    "reveil": ("Routine du réveil", "5 minutes au bord du lit : cou, épaules, dos, psoas."),
-    "pause": ("Pause mouvement", "Lève-toi 5 minutes : menton rentré, pectoral, hanches, moyen fessier."),
+    "reveil": ("Routine du réveil", "5 minutes : cou et dos, puis hanches et fessiers."),
+    "pause": ("Pause mouvement", "Lève-toi 5 minutes : nuque, pectoral, cercles de hanche, psoas, fessiers."),
+    "debout": ("Bureau debout", "Monte le bureau et travaille debout jusqu'à la prochaine pause. Genoux souples, change d'appui."),
     "force": ("Séance de force", "20 minutes : moyen fessier et haut du dos."),
     "coucher": ("Routine du coucher", "5 minutes pour relâcher le cou, les fessiers et les hanches."),
 }
@@ -202,6 +204,10 @@ def validate_content(c) -> tuple[list[str], list[str]]:
     if not (isinstance(rules, list) and all(isinstance(r, list) and len(r) == 2 and strs(r) for r in rules)):
         err.append('"force.rules" : liste de paires ["Titre", "Texte"] attendue.')
 
+    debout = c.get("debout", {})
+    if not (isinstance(debout, dict) and all(isinstance(v, str) for v in debout.values())):
+        err.append('"debout" : objet {"label": "...", "sub": "..."} attendu.')
+
     tips = c.get("tips", [])
     if not isinstance(tips, list):
         err.append('"tips" : liste attendue.')
@@ -268,8 +274,9 @@ def clean_cfg(raw: dict, base: dict) -> dict:
         cfg["every"] = raw["every"]
     if type(raw.get("relance")) is int and raw["relance"] in (0, 5, 10, 15, 30, 45, 60):
         cfg["relance"] = raw["relance"]
-    if isinstance(raw.get("notify"), bool):
-        cfg["notify"] = raw["notify"]
+    for k in ("notify", "stand"):
+        if isinstance(raw.get(k), bool):
+            cfg[k] = raw[k]
     for k in ("workdays", "force_days"):
         v = raw.get(k)
         if isinstance(v, list) and all(type(i) is int and 0 <= i <= 6 for i in v):
@@ -305,13 +312,16 @@ def hhmm(m: int) -> str:
 
 
 def slots_for(d: date, cfg: dict) -> list[dict]:
-    """Même logique que la page : réveil, pauses (jours travaillés), force, coucher."""
+    """Même logique que la page : réveil, pauses (jours travaillés) avec bureau debout
+    à mi-chemin entre deux pauses, force, coucher."""
     dow = d.weekday()
     out = [{"id": "reveil", "time": cfg["wake"], "kind": "reveil"}]
     if dow in cfg["workdays"]:
         m, end, step = to_min(cfg["start"]), to_min(cfg["end"]), cfg["every"] * 60
         while m <= end:
             out.append({"id": "p" + hhmm(m), "time": hhmm(m), "kind": "pause"})
+            if cfg["stand"] and m + step // 2 <= end:
+                out.append({"id": "d" + hhmm(m + step // 2), "time": hhmm(m + step // 2), "kind": "debout"})
             m += step
     if dow in cfg["force_days"]:
         out.append({"id": "force", "time": cfg["force_time"], "kind": "force"})
