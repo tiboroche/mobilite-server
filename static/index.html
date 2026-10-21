@@ -107,8 +107,8 @@ h2.sec:first-child{margin-top:4px}
 details.set{border-top:1px solid var(--line);margin-top:26px;padding-top:6px}
 details.set summary,details.ex summary{cursor:pointer;font-weight:600;padding:10px 0;min-height:44px;display:flex;align-items:center}
 .fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;padding:6px 0 10px}
-.fields label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--muted)}
-.fields input,.fields select{font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;min-height:44px}
+.fields label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--muted);min-width:0}
+.fields input,.fields select{width:100%;min-width:0;font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:9px 10px;min-height:44px}
 .note{font-size:14px;color:var(--muted);max-width:62ch}
 
 /* Routines */
@@ -219,7 +219,7 @@ details.ex .body em{color:var(--muted);font-style:normal;font-size:14px}
         <label>Coucher<input type="time" id="c-bed"></label>
         <label>Séance de force<input type="time" id="c-force"></label>
         <label>Rappels<select id="c-notify"><option value="1">Activés</option><option value="0">Désactivés</option></select></label>
-        <label>Bureau debout<select id="c-stand"><option value="1">Rappel entre les pauses</option><option value="0">Désactivé</option></select></label>
+        <label>Bureau debout<select id="c-stand"><option value="1">Entre les pauses</option><option value="0">Désactivé</option></select></label>
         <label>Relance si non fait<select id="c-relance"><option value="0">Aucune</option><option value="10">Après 10 min</option><option value="15">Après 15 min</option><option value="30">Après 30 min</option></select></label>
       </div>
       <div class="grp"><span class="lab">Jours de pause au bureau</span><div class="daysrow" id="d-workdays"></div></div>

@@ -1,9 +1,12 @@
 """Tests de bout en bout : lance le vrai serveur + un faux ntfy. `python3 test_server.py`"""
 import copy
+import html
 import http.client
 import json
 import os
+import re
 import shutil
+import subprocess
 import tempfile
 import threading
 import unittest
@@ -46,6 +49,59 @@ from http.server import ThreadingHTTPServer  # noqa: E402
 srv = ThreadingHTTPServer(("127.0.0.1", 0), server.Handler)
 threading.Thread(target=srv.serve_forever, daemon=True).start()
 PORT = srv.server_port
+
+# Sonde de mise en page mobile : la page est chargée dans des iframes de largeur téléphone
+# (même origine, servie sans la CSP qui interdit l'iframe), réglages ouverts puis lecteur lancé ;
+# tout ce qui sort de l'écran est listé.
+CHROME = os.environ.get("MOB_CHROME") or next(
+    filter(None, map(shutil.which, ("google-chrome", "chromium", "chromium-browser", "chrome-headless-shell"))), None)
+PROBE = b"""<!doctype html><meta charset="utf-8"><body><pre id="r"></pre><script>
+var W=[320,361,390],H=740,out=[];
+function scrolls(e){for(;e&&e.nodeType===1;e=e.parentElement){var o=getComputedStyle(e).overflowX;if(o==="auto"||o==="scroll"||o==="hidden")return true}return false}
+function name(e){return e.tagName.toLowerCase()+(e.id?"#"+e.id:"")+(e.className&&e.className.baseVal===undefined?"."+e.className.trim().replace(/ +/g,"."):"")}
+function check(w,doc,sel,tall){
+  doc.querySelectorAll(sel).forEach(function(e){
+    var r=e.getBoundingClientRect();if(!r.width||scrolls(e.parentElement))return;
+    if(r.right>w+0.5||r.left<-0.5)out.push(w+"px : "+name(e)+" de "+Math.round(r.left)+" a "+Math.round(r.right));
+    if(tall&&r.bottom>H+0.5)out.push(w+"px : "+name(e)+" coupe en bas ("+Math.round(r.bottom)+" > "+H+")");
+  });
+}
+function next(){
+  var w=W.shift();
+  if(!w){document.getElementById("r").textContent=JSON.stringify(out);return}
+  var f=document.createElement("iframe");f.style.cssText="border:0;width:"+w+"px;height:"+H+"px";f.src="/__mobile_index.html";
+  f.onload=function(){setTimeout(function(){
+    var d=f.contentDocument,win=f.contentWindow;
+    d.getElementById("gate").hidden=true;
+    d.querySelectorAll("details").forEach(function(x){x.open=true});
+    check(w,d,"main *",false);
+    win.startRoutine("pause",null);win.P.run=false;
+    check(w,d,"#player *",true);
+    win.closePlayer();f.remove();next();
+  },1500)};
+  document.body.appendChild(f);
+}
+next();
+</script>"""
+
+
+class ProbeHandler(server.Handler):
+    def static(self, path):
+        pages = {"/__mobile_probe.html": lambda: PROBE,
+                 "/__mobile_index.html": lambda: (server.STATIC / "index.html").read_bytes()}
+        if path not in pages:
+            return super().static(path)
+        data = pages[path]()
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+
+
+probe_srv = ThreadingHTTPServer(("127.0.0.1", 0), ProbeHandler)
+threading.Thread(target=probe_srv.serve_forever, daemon=True).start()
+PROBE_PORT = probe_srv.server_port
 
 
 def call(method, path, body=None, token=TOKEN):
@@ -247,6 +303,19 @@ class T(unittest.TestCase):
         self.assertEqual(server.notif_text("reveil")[0], "Version valide")   # notifications : dernière version valide
         self.assertEqual(call("GET", "/content.json", token=None)[0], 500)   # la page est prévenue
         self.assertEqual(server.check_cli(), 1)
+
+    @unittest.skipUnless(CHROME, "Chrome/Chromium introuvable (MOB_CHROME pour le préciser)")
+    def test_mobile_layout_fits_screen(self):
+        """Rien ne doit dépasser en largeur sur téléphone : sinon Android agrandit le viewport
+        et le lecteur plein écran (position: fixed) est coupé à droite et en bas."""
+        with tempfile.TemporaryDirectory() as prof:
+            out = subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--no-first-run",
+                                  f"--user-data-dir={prof}", "--virtual-time-budget=15000",
+                                  "--dump-dom", f"http://127.0.0.1:{PROBE_PORT}/__mobile_probe.html"],
+                                 capture_output=True, text=True, timeout=60).stdout
+        m = re.search(r'<pre id="r">(.*?)</pre>', out, re.S)
+        self.assertTrue(m and m.group(1).startswith("["), "la sonde n'a pas rendu de résultat")
+        self.assertEqual(json.loads(html.unescape(m.group(1))), [])
 
     def test_rate_limit(self):
         for _ in range(10):

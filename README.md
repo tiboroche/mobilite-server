@@ -130,7 +130,8 @@ Créneaux : `reveil`, `coucher`, `force`, `pHH:MM` (pause, ex. `p14:00`), `dHH:M
 
 ## Tests
 ```bash
-python3 test_server.py     # lance le serveur et un faux ntfy, 18 tests (dont la validation de content.json)
+python3 test_server.py     # lance le serveur et un faux ntfy, 19 tests (dont la validation de content.json
+                           # et la mise en page mobile, via Chrome/Chromium headless si présent, sinon ignoré)
 ```
 
 ## Pistes d'évolution
