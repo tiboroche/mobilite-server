@@ -330,7 +330,7 @@ function expand(rid){
   var out=[],r=ROUT[rid];if(!r)return out;
   r.steps.forEach(function(s){
     var e=EX[s[0]];
-    if(s[2]){["Côté gauche","Côté droit"].forEach(function(sd){out.push({id:s[0],name:e.name,side:sd,sec:s[1],how:e.how})})}
+    if(s[2]){["Côté droit","Côté gauche"].forEach(function(sd){out.push({id:s[0],name:e.name,side:sd,sec:s[1],how:e.how})})}
     else out.push({id:s[0],name:e.name,side:"",sec:s[1],how:e.how});
   });
   return out;

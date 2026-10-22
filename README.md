@@ -83,7 +83,7 @@ et le serveur affiche l'erreur dans ses logs.
 |---|---|
 | `tags` | Zones du corps proposées comme filtres dans l'onglet Exercices. |
 | `exercises` | La bibliothèque. Clé = identifiant stable (`a-z`, `0-9`, `_`), valeur = `name`, `tags`, `how` (la consigne affichée aussi dans le minuteur), `tip` (astuce, facultative), `from_notes` (`true` = étoile ★). |
-| `routines` | `reveil`, `pause`, `coucher` (obligatoires). Chaque étape : `{"ex": "id", "sec": 30}` ; ajoute `"bi": true` pour un exercice fait des deux côtés (`sec` est alors **par côté**, la durée est doublée). |
+| `routines` | `reveil`, `pause`, `coucher` (obligatoires). Chaque étape : `{"ex": "id", "sec": 30}` ; ajoute `"bi": true` pour un exercice fait des deux côtés (côté droit puis gauche ; `sec` est alors **par côté**, la durée est doublée). Le texte `how` d'un exercice `bi` ne nomme pas de côté : il parle du « côté travaillé », celui affiché par le lecteur. |
 | `force` | Textes de l'onglet, `rules` (tableau Rythme, Début…), et `phases` avec leurs exercices : `{"ex": "clam", "dose": "3 × 12 / côté"}`. `minutes` et `sub` servent à la frise et au héros. |
 | `debout` | `label` et `sub` des créneaux « bureau debout » dans la frise et le héros (facultatif). |
 | `tips` | Les conseils : une liste de `{"title": "...", "items": ["...", "..."]}`, plus `alert` pour l'encadré en bas. |

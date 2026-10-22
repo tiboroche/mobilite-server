@@ -42,14 +42,14 @@
       "name": "Étirement de l'élévateur de l'omoplate",
       "tags": ["Cou", "Épaules"],
       "from_notes": true,
-      "how": "Assis, main du côté étiré qui tient le bord de la chaise (épaule basse). Tourne le nez vers l'aisselle opposée, puis incline doucement la tête vers l'avant. L'autre main peut peser très légèrement.",
+      "how": "Assis, main du côté travaillé qui tient le bord de la chaise (épaule basse). Tourne le nez vers l'aisselle opposée, puis incline doucement la tête vers l'avant. L'autre main peut peser très légèrement.",
       "tip": "Étirement à l'arrière-côté du cou. Respire lentement. Jamais de douleur vive ni de fourmillements."
     },
     "pectoral_porte": {
       "name": "Étirement du pectoral dans l'encadrement d'une porte",
       "tags": ["Épaules", "Dos"],
       "from_notes": true,
-      "how": "Avant-bras contre l'encadrement, coude à hauteur d'épaule. Petit pas en avant, tourne légèrement le buste à l'opposé, sans cambrer le dos.",
+      "how": "Avant-bras du côté travaillé contre l'encadrement, coude à hauteur d'épaule. Petit pas en avant, tourne légèrement le buste à l'opposé, sans cambrer le dos.",
       "tip": "Tu ouvres le devant de l'épaule, que le travail assis a tendance à refermer. Refais avec le coude plus haut ou plus bas pour étirer d'autres fibres."
     },
     "chat_vache": {
@@ -63,49 +63,49 @@
       "name": "Rotation du haut du dos (livre ouvert)",
       "tags": ["Dos", "Épaules"],
       "from_notes": false,
-      "how": "Allongé sur le côté, genoux pliés et empilés, bras tendus devant. Ouvre le bras du dessus vers l'arrière en suivant la main du regard, bassin immobile. Reviens.",
+      "how": "Allongé sur le côté opposé, genoux pliés et empilés, bras tendus devant. Ouvre le bras du côté travaillé (celui du dessus) vers l'arrière en suivant la main du regard, bassin immobile. Reviens.",
       "tip": "Ce qui tourne, c'est le haut du dos, pas le bassin. Souffle en ouvrant."
     },
     "psoas_fente": {
       "name": "Étirement du psoas (fente genou au sol)",
       "tags": ["Hanches"],
       "from_notes": false,
-      "how": "Un genou au sol sur un coussin, l'autre pied devant. Bascule le bassin pour rentrer le coccyx, serre la fesse du genou au sol, puis avance doucement le bassin.",
+      "how": "Genou du côté travaillé au sol sur un coussin, l'autre pied devant. Bascule le bassin pour rentrer le coccyx, serre la fesse de ce côté, puis avance doucement le bassin.",
       "tip": "Sensation à l'avant de la hanche du genou au sol. Lève le bras de ce côté pour intensifier. Pas de creux dans le bas du dos."
     },
     "psoas_debout": {
       "name": "Étirement du psoas debout",
       "tags": ["Hanches"],
       "from_notes": false,
-      "how": "Debout, un grand pas en arrière, talon du pied arrière levé. Rentre le coccyx, serre la fesse arrière et avance légèrement le bassin.",
+      "how": "Debout, grand pas en arrière avec la jambe du côté travaillé, talon arrière levé. Rentre le coccyx, serre la fesse arrière et avance légèrement le bassin.",
       "tip": "Version bureau de la fente. Une main sur le mur ou sur la chaise pour l'équilibre."
     },
     "cercles_hanche": {
       "name": "Cercles de hanche debout",
       "tags": ["Hanches", "Fessier"],
       "from_notes": false,
-      "how": "Debout, une main sur le mur ou le bureau. Monte le genou devant toi, ouvre-le sur le côté, puis ramène la jambe vers l'arrière et redescends : un grand cercle lent. 3 cercles dans un sens, 3 dans l'autre.",
+      "how": "Debout, la main opposée sur le mur ou le bureau. Monte le genou du côté travaillé devant toi, ouvre-le sur le côté, puis ramène la jambe vers l'arrière et redescends : un grand cercle lent. 3 cercles dans un sens, 3 dans l'autre.",
       "tip": "Le bassin et le buste restent immobiles : seule la hanche tourne. Cherche l'amplitude la plus grande possible sans compenser avec le dos."
     },
     "thomas": {
       "name": "Psoas au bord du lit",
       "tags": ["Hanches"],
       "from_notes": false,
-      "how": "Allongé sur le dos au bord du lit. Ramène un genou vers ta poitrine avec les mains, l'autre jambe pend dans le vide et se détend.",
+      "how": "Allongé sur le dos au bord du lit. Ramène le genou opposé vers ta poitrine avec les mains ; la jambe du côté travaillé pend dans le vide et se détend.",
       "tip": "Le bas du dos reste posé sur le lit. Laisse la gravité étirer l'avant de la hanche de la jambe qui pend."
     },
     "fessier_debout": {
       "name": "Levé de jambe sur le côté (moyen fessier)",
       "tags": ["Fessier", "Hanches"],
       "from_notes": true,
-      "how": "Debout, une main sur le mur ou la chaise. Lève la jambe sur le côté, pied et bassin de face. Tiens 1 seconde en haut, redescends lentement.",
+      "how": "Debout, la main opposée sur le mur ou la chaise. Lève la jambe du côté travaillé sur le côté, pied et bassin de face. Tiens 1 seconde en haut, redescends lentement.",
       "tip": "Ne penche pas le buste de l'autre côté. Pense à pousser le talon vers l'extérieur plutôt qu'à monter haut."
     },
     "fessier_assis": {
       "name": "Étirement fessier assis",
       "tags": ["Fessier", "Hanches"],
       "from_notes": false,
-      "how": "Assis au bord de la chaise, pose la cheville droite sur le genou gauche. Dos long, penche le buste vers l'avant depuis les hanches jusqu'à sentir le fessier droit s'étirer.",
+      "how": "Assis au bord de la chaise, pose la cheville du côté travaillé sur le genou opposé. Dos long, penche le buste vers l'avant depuis les hanches jusqu'à sentir ce fessier s'étirer.",
       "tip": "Version bureau de l'étirement jambes croisées. Appuie doucement sur le genou levé pour accentuer, sans arrondir le dos."
     },
     "enfant": {
@@ -119,14 +119,14 @@
       "name": "Étirement fessier allongé (jambes croisées)",
       "tags": ["Fessier", "Hanches"],
       "from_notes": true,
-      "how": "Allongé sur le dos, croise la cheville droite sur le genou gauche. Ramène le genou gauche vers toi en tenant derrière la cuisse, jusqu'à sentir le fessier droit s'étirer.",
+      "how": "Allongé sur le dos, croise la cheville du côté travaillé sur le genou opposé. Ramène ce genou opposé vers toi en tenant derrière la cuisse, jusqu'à sentir le fessier du côté travaillé s'étirer.",
       "tip": "Épaules et tête restent posées. Ne tire pas sur le genou : travaille avec les mains sur la cuisse."
     },
     "rot_genou_leve": {
       "name": "Rotation genou levé (hanche en rotation)",
       "tags": ["Fessier", "Hanches"],
       "from_notes": true,
-      "how": "Assis au sol, jambe avant pliée à 90° devant toi, jambe arrière pliée sur le côté. Redresse le dos, puis penche le buste vers la jambe avant en gardant le dos long.",
+      "how": "Assis au sol, jambe du côté travaillé pliée à 90° devant toi, l'autre jambe pliée sur le côté, derrière. Redresse le dos, puis penche le buste vers la jambe avant en gardant le dos long.",
       "tip": "Étirement du fessier côté jambe avant. Mets un coussin sous le fessier si le bassin bascule."
     },
     "essuie_glace": {
@@ -297,6 +297,7 @@
       ["Début", "Routine du réveil, ou 3 minutes de mobilité, pour chauffer."],
       ["Fin", "Rotation genou levé et étirement du pectoral (1 minute chacun)."],
       ["Intensité", "Effort de 6 à 7 sur 10. Les dernières répétitions sont exigeantes mais propres, sans douleur."],
+      ["Côtés", "Exercices sur un côté : commence toujours par le côté droit, puis le gauche."],
       ["Progression", "Quand toutes les séries se font facilement : ajoute des répétitions, puis passe à un élastique plus dur."]
     ],
     "phases": [
